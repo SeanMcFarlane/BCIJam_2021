@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Assets.LSL4Unity.Scripts;
+using UnityEditor;
 
 /*
 P300 Flashes Program
@@ -43,29 +44,28 @@ Adapted from: Shaheed Murji "P300_Flashes.cs"
     
  */
 
-public class P300_Controller : MonoBehaviour
-{
-    /* Public Variables */
-    public int refreshRate;     //Refresh rate of the Screen
-    public float freqHz;        //Frequency in Hz
-    public float dutyCycle;     //Previously 'flashLength'. Determines how long an object will remain "on" during a flash. 
-    public int numFlashes;      //Previously 'numSamples'. Determines number of times a single object will flash in the series.
-    public double startX;       //Initial position of X for drawing in the objects
-    public double startY;       //Initial position of Y for drawing in the objects
-    public float startZ;        //Initial position of Z for drawing in the objects
-    public double distanceX;    //Distance between objects in X-plane
-    public double distanceY;    //Distance between objects in Y-Plane
-    public GameObject myObject; //Previously 'myCube'. Object type that will be flashing. Default is a cube.
-    public Resolution[] resol;  //Resolution of the screen
-    public int numRows;         //Initial number of rows to use
-    public int numColumns;      //Initial number of columns to use
-    public Color onColour;      //Color during the 'flash' of the object.
-    public Color offColour;     //Color when not flashing of the object.
-    public bool SendLiveInfo;   //This determines whether or not to send live information about the set-up to LSL.
-    public int TargetObjectID;  //This can be used to select a 'target' object for individuals to focus on, using the given int ID.
+public class P300_Controller : MonoBehaviour {
+	/* Public Variables */
+	public int refreshRate;     //Refresh rate of the Screen
+	public float freqHz;        //Frequency in Hz
+	public float dutyCycle;     //Previously 'flashLength'. Determines how long an object will remain "on" during a flash. 
+	public int numFlashes;      //Previously 'numSamples'. Determines number of times a single object will flash in the series.
+	public double startX;       //Initial position of X for drawing in the objects
+	public double startY;       //Initial position of Y for drawing in the objects
+	public float startZ;        //Initial position of Z for drawing in the objects
+	public double distanceX;    //Distance between objects in X-plane
+	public double distanceY;    //Distance between objects in Y-Plane
+	public GameObject myObject; //Previously 'myCube'. Object type that will be flashing. Default is a cube.
+	public Resolution[] resol;  //Resolution of the screen
+	public int numRows;         //Initial number of rows to use
+	public int numColumns;      //Initial number of columns to use
+	public Color onColour;      //Color during the 'flash' of the object.
+	public Color offColour;     //Color when not flashing of the object.
+	public bool SendLiveInfo;   //This determines whether or not to send live information about the set-up to LSL.
+	public int TargetObjectID;  //This can be used to select a 'target' object for individuals to focus on, using the given int ID.
 
-    //Variables for the Boxes
-    /* Grid is mapped out as follows:
+	//Variables for the Boxes
+	/* Grid is mapped out as follows:
 
         c00     c10     c20
 
@@ -75,205 +75,182 @@ public class P300_Controller : MonoBehaviour
 
      */
 
-    /* Variables shared with LSL Inlet (to be accessed to flash correct cube) */
-    public List<GameObject> object_list = new List<GameObject>();  //Previously 'cube_list'. List of objects that will be flashing, shared with the LSL inlet.
+	/* Variables shared with LSL Inlet (to be accessed to flash correct cube) */
+	public List<GameObject> object_list = new List<GameObject>();  //Previously 'cube_list'. List of objects that will be flashing, shared with the LSL inlet.
 
-    /* Private Variables */
-    private GameObject[,] object_matrix;
-    private int s_trials;
-    private Dictionary<KeyCode, bool> keyLocks = new Dictionary<KeyCode, bool>();
+	/* Private Variables */
+	private GameObject[,] object_matrix;
+	private int s_trials;
+	private Dictionary<KeyCode, bool> keyLocks = new Dictionary<KeyCode, bool>();
 
-    //Variables used for checking redraw
-    private double current_startx;
-    private double current_starty;
-    private float current_startz;
-    private double current_dx;
-    private double current_dy;
-    private int current_numrow;
-    private int current_numcol;
-    private GameObject current_object;
-    private bool locked_keys = false;
+	//Variables used for checking redraw
+	private double current_startx;
+	private double current_starty;
+	private float current_startz;
+	private double current_dx;
+	private double current_dy;
+	private int current_numrow;
+	private int current_numcol;
+	private GameObject current_object;
+	private bool locked_keys = false;
 
-    /* LSL Variables */
-    private LSLMarkerStream marker;
-    private Inlet_P300 inletP300;
+	/* LSL Variables */
+	private LSLMarkerStream marker;
+	private Inlet_P300 inletP300;
 
-    //Other Scripts to Connect
-    [SerializeField] Setup_P300 setup;
-    [SerializeField] SingleFlash singleFlash;
+	//Other Scripts to Connect
+	[SerializeField] Setup_P300 setup;
+	[SerializeField] SingleFlash singleFlash;
 
-    private void Awake()
-    {
-        setup = GetComponent<Setup_P300>();
-        singleFlash = GetComponent<SingleFlash>();
-    }
+	private void Awake() {
+		setup = GetComponent<Setup_P300>();
+		singleFlash = GetComponent<SingleFlash>();
+	}
 
-    private void Start()
-    {
-        //Get the screen refresh rate, so that the colours can be set appropriately
-        resol = Screen.resolutions;
-        refreshRate = resol[3].refreshRate;
-        //Set up LSL Marker Streams (Outlet & Inlet)
-        marker = FindObjectOfType<LSLMarkerStream>();
-        inletP300 = FindObjectOfType<Inlet_P300>();
+	private void Start() {
+		//Get the screen refresh rate, so that the colours can be set appropriately
+		resol = Screen.resolutions;
+		refreshRate = resol[3].refreshRate;
+		//Set up LSL Marker Streams (Outlet & Inlet)
+		marker = FindObjectOfType<LSLMarkerStream>();
+		inletP300 = FindObjectOfType<Inlet_P300>();
 
-        //Setting up Keys, to lock other keys when one simulation is being run
-        keyLocks.Add(KeyCode.S, false);
-        keyLocks.Add(KeyCode.D, false);
-        locked_keys = false;
+		//Setting up Keys, to lock other keys when one simulation is being run
+		keyLocks.Add(KeyCode.S, false);
+		keyLocks.Add(KeyCode.D, false);
+		locked_keys = false;
 
-        //Starting with sending the live information as false.
-        SendLiveInfo = false;
+		//Starting with sending the live information as false.
+		SendLiveInfo = false;
 
-        //Check to see if inputs are valid, if not, then don't draw matrix and prompt user to redraw with the
-        //correct inputs
-        if (CheckEmpty())
-        {
-            print("Values must be non-zero and non-negative, please re-enter values and press 'D' to redraw...");
-            locked_keys = true;
-            return;
-        }
-        //Initialize Matrix
-        SetupP300();
-        //SetUpMatrix();
-        //SetUpSingle();
-        //SetUpRC();
+		//Check to see if inputs are valid, if not, then don't draw matrix and prompt user to redraw with the
+		//correct inputs
+		if(CheckEmpty()) {
+			print("Values must be non-zero and non-negative, please re-enter values and press 'D' to redraw...");
+			locked_keys = true;
+			return;
+		}
+		//Initialize Matrix
+		SetupP300();
+		//SetUpMatrix();
+		//SetUpSingle();
+		//SetUpRC();
 
-        SaveCurrentInfo();
-        //Set the colour of the box to the given offColour
-        //TurnOff();
-        //System.Threading.Thread.Sleep(2000);
-        SendInfo();
-    }
+		SaveCurrentInfo();
+		//Set the colour of the box to the given offColour
+		//TurnOff();
+		//System.Threading.Thread.Sleep(2000);
+		SendInfo();
+	}
 
 
-    private void Update()
-    {
-        //Don't think we need this anymore.
+	private void Update() {
 
-        //if(Input.GetKeyDown(KeyCode.I))
-        //{
-        //    SetupP300();
-        //    Debug.Log("Initialization worked!");
-        //}
+		if(Input.GetKeyDown(KeyCode.S)) {
+			RunSingleFlash();
+			Debug.Log("Single Flash worked!");
+		}
 
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            RunSingleFlash();
-            Debug.Log("Single Flash worked!");
-        }
+		//Resolve new streams - This is just if you need to refresh the streams.
+		if(Input.GetKeyDown(KeyCode.F4)) {
+			inletP300.ResolveOnRequest();
+		}
 
-        //Resolve new streams - This is just if you need to refresh the streams.
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            inletP300.ResolveOnRequest();
-        }
+		////TODO: Redraw Matrix
+		////Select this after changing parameters
+		//if (Input.GetKeyDown(KeyCode.D) && keyLocks[KeyCode.S] == false)
+		//{
+		//    //Check if values are empty
+		//    if (CheckEmpty())
+		//    {
+		//        print("Values must be non-zero and non-negative, please re-enter values and try again...");
+		//        locked_keys = true;
+		//        return;
+		//    }
+		//    keyLocks[KeyCode.D] = true;
+		//    //Run our Redraw function.
+		//    
+		//    RedrawSingleFlash();
+		//}
 
+		//Quit Program 
+		if(Input.GetKeyDown(KeyCode.Q)) {
+			print("Quitting Program...");
+			marker.Write("Quit");
+			marker = null;
+			Application.Quit();
+			if(Application.isEditor) {
+				EditorApplication.ExitPlaymode();
+			}
+		}
+	}
 
-        ////TODO: Redraw Matrix
-        ////Select this after changing parameters
-        //if (Input.GetKeyDown(KeyCode.D) && keyLocks[KeyCode.S] == false)
-        //{
-        //    //Check if values are empty
-        //    if (CheckEmpty())
-        //    {
-        //        print("Values must be non-zero and non-negative, please re-enter values and try again...");
-        //        locked_keys = true;
-        //        return;
-        //    }
-        //    keyLocks[KeyCode.D] = true;
-        //    //Run our Redraw function.
-        //    
-        //    RedrawSingleFlash();
-        //}
+	//Setting up the scene:
+	private void SetupP300() {
+		object_matrix = setup.SetUpMatrix(object_list);
+		setup.Recolour(object_list, offColour);
+	}
 
-        //Quit Program 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            print("Quitting Program...");
-            marker.Write("Quit");
-            marker = null;
-            Application.Quit();
-        }
-    }
+	public void RunSingleFlash() {
+		singleFlash.SetUpSingle();
+		singleFlash.SingleFlashes();
+	}
 
-    //Setting up the scene:
-    private void SetupP300()
-    {
-        object_matrix = setup.SetUpMatrix(object_list);
-        setup.Recolour(object_list,offColour);
-    }
+	private void RedrawSingleFlash() {
+		setup.DestroyMatrix();
+		SetupP300();
+		singleFlash.Redraw();
+	}
 
-    public void RunSingleFlash()
-    {
-        singleFlash.SetUpSingle();
-        singleFlash.SingleFlashes();
-    }
+	/* Checks to see if given values are valid */
+	public bool CheckEmpty() {
+		if(myObject == null || distanceX <= 0 || distanceY <= 0 || numRows <= 0 || numColumns <= 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-    private void RedrawSingleFlash()
-    {
-        setup.DestroyMatrix();
-        SetupP300();
-        singleFlash.Redraw();
-    }
+	/* Write information to LSL for initializations */
+	//TODO: Make this more intuitive and flexible for send/receive. JSONify.
+	public void SendInfo() {
+		marker.Write(numRows.ToString());
+		marker.Write(numColumns.ToString());
+		marker.Write(numFlashes.ToString());
+		marker.Write(s_trials.ToString());
+	}
 
-    /* Checks to see if given values are valid */
-    public bool CheckEmpty()
-    {
-        if (myObject == null || distanceX <= 0 || distanceY <= 0 || numRows <= 0 || numColumns <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+	//Send Current information about the current P300 setup
+	public void SendCurrentInfo() {
+		marker.Write("Current rows : "  + numRows.ToString());
+		marker.Write("Current cols: "   + numColumns.ToString());
+		marker.Write("Num flashes: "    + numFlashes.ToString());
+		marker.Write("Target Object: "  + TargetObjectID.ToString());
+	}
 
-    /* Write information to LSL for initializations */
-    //TODO: Make this more intuitive and flexible for send/receive. JSONify.
-    public void SendInfo()
-    {
-        marker.Write(numRows.ToString());
-        marker.Write(numColumns.ToString());
-        marker.Write(numFlashes.ToString());
-        marker.Write(s_trials.ToString());
-    }
+	/* Save current states into variables for OnValidate to check */
+	public void SaveCurrentInfo() {
+		current_object  = myObject;
+		current_startx  = startX;
+		current_starty  = startY;
+		current_startz  = startZ;
+		current_dx      = distanceX;
+		current_dy      = distanceY;
+		current_numrow  = numRows;
+		current_numcol  = numColumns;
+	}
 
-    //Send Current information about the current P300 setup
-    public void SendCurrentInfo()
-    {
-        marker.Write("Current rows : "  + numRows.ToString());
-        marker.Write("Current cols: "   + numColumns.ToString());
-        marker.Write("Num flashes: "    + numFlashes.ToString());
-        marker.Write("Target Object: "  + TargetObjectID.ToString());
-    }
+	//Write any marker you want!
+	public void WriteMarker(string markerString) {
+		marker.Write(markerString);
+	}
 
-    /* Save current states into variables for OnValidate to check */
-    public void SaveCurrentInfo()
-    {
-        current_object  = myObject;
-        current_startx  = startX;
-        current_starty  = startY;
-        current_startz  = startZ;
-        current_dx      = distanceX;
-        current_dy      = distanceY;
-        current_numrow  = numRows;
-        current_numcol  = numColumns;
-    }
-
-    //Write any marker you want!
-    public void WriteMarker(string markerString)
-    {
-        marker.Write(markerString);
-    }
-
-    //Toggle key locks on/off
-    public void LockKeysToggle(KeyCode key)
-    {
-        keyLocks[key] = keyLocks[key];
-        locked_keys = !locked_keys;
-    }
+	//Toggle key locks on/off
+	public void LockKeysToggle(KeyCode key) {
+		keyLocks[key] = keyLocks[key];
+		locked_keys = !locked_keys;
+	}
 
 
 

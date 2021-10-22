@@ -84,8 +84,6 @@ public class TestFuncs : MonoBehaviour {
 
 	}
 
-
-
 	//private void Update() {
 	//	if(Input.GetKeyDown(KeyCode.G)) {
 	//		output = RunTestPython();

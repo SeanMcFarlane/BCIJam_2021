@@ -865,7 +865,7 @@ MonoBehaviour:
   StreamName: marker
   StreamType: LSL_Marker_Strings
   objectID: 0
-  selectedString: s,8
+  selectedString: s,4
 --- !u!114 &979654294
 MonoBehaviour:
   m_ObjectHideFlags: 0

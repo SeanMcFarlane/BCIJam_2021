@@ -22,34 +22,29 @@ public class Inlet_P300 : AStringInlet {
 	private int numRows;
 	public int cubeIndex;
 	private int[] cubeIndices;
+
+
+	bool initialized = false;
+	P300_Controller p300Flashes;
+
 	protected override void Process(string[] newSample, double timeStamp) {
 		//Avoid doing heavy processing here, use CoRoutines
 		input = newSample[0];
 		timestamp = timeStamp;
 
-		//OLD
-		//Obtain necessary information from the P300_Flashes.cs file. 
-		//GameObject p300Controller = GameObject.FindGameObjectWithTag("BCI");
-		//print("CONTROLLER: " + p300Controller.name);
-		//P300_Flashes p300Flashes = p300Controller.GetComponent<P300_Flashes>();
-		//object_list = p300Flashes.cube_list;
-		//freqHz = p300Flashes.freqHz;
-		//onColour = p300Flashes.onColour;
-		//offColour = p300Flashes.offColour;
-		//numRows = p300Flashes.numRows;
-		//cubeIndices = new int[numRows];
-
-		//NEW
-		//Obtain necesary information from the P300_Controller.cs object.
-		GameObject p300Controller = GameObject.FindGameObjectWithTag("BCI");
-		print("CONTROLLER: " + p300Controller.name);
-		P300_Controller p300Flashes = p300Controller.GetComponent<P300_Controller>();
-		object_list = p300Flashes.object_list;
-		freqHz = p300Flashes.freqHz;
-		onColour = p300Flashes.onColour;
-		offColour = p300Flashes.offColour;
-		numRows = p300Flashes.numRows;
-		cubeIndices = new int[numRows];
+		if(!initialized) {
+			//Obtain necesary information from the P300_Controller.cs object.
+			GameObject p300Controller = GameObject.FindGameObjectWithTag("BCI");
+			print("CONTROLLER: " + p300Controller.name);
+			p300Flashes = p300Controller.GetComponent<P300_Controller>();
+			object_list = p300Flashes.object_list;
+			freqHz = p300Flashes.freqHz;
+			onColour = p300Flashes.onColour;
+			offColour = p300Flashes.offColour;
+			numRows = p300Flashes.numRows;
+			cubeIndices = new int[numRows];
+			initialized = true;
+		}
 
 		//Call CoRoutine to do further processing
 		StartCoroutine("SelectedCube");

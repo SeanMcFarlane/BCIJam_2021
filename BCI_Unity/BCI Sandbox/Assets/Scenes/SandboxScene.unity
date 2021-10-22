@@ -552,6 +552,57 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &205764356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 205764358}
+  - component: {fileID: 205764357}
+  m_Layer: 0
+  m_Name: StreamList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &205764357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205764356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bc033cd2cffec7459d6fa31ad6a961b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knownStreams: []
+  forgetStreamAfter: 1
+  onStreamFound:
+    m_PersistentCalls:
+      m_Calls: []
+  onStreamLost:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &205764358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205764356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.2810574, y: 2.5250177, z: -0.76480705}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &234289626
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,10 +913,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moment: 0
-  StreamName: marker
-  StreamType: LSL_Marker_Strings
+  StreamName: Muse
+  StreamType: EEG
   objectID: 0
-  selectedString: s,4
 --- !u!114 &979654294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,8 +929,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moment: 0
-  StreamName: marker
-  StreamType: LSL_Marker_Strings
+  StreamName: Muse
+  StreamType: EEG
   cubeIndex: 0
 --- !u!1 &1538679303
 GameObject:
@@ -1019,6 +1069,14 @@ PrefabInstance:
     - target: {fileID: 5371671609537870712, guid: 070451d8edef52149aec11f4603d0577, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371671609537870714, guid: 070451d8edef52149aec11f4603d0577, type: 3}
+      propertyPath: lslStreamName
+      value: Muse
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371671609537870714, guid: 070451d8edef52149aec11f4603d0577, type: 3}
+      propertyPath: lslStreamType
+      value: EEG
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5371671609537870718, guid: 070451d8edef52149aec11f4603d0577, type: 3}

@@ -45,6 +45,9 @@ Adapted from: Shaheed Murji "P300_Flashes.cs"
  */
 
 public class P300_Controller : MonoBehaviour {
+
+	[SerializeField] private GameObject bciButtonPrefab;
+
 	/* Public Variables */
 	public int refreshRate;     //Refresh rate of the Screen
 	public float freqHz;        //Frequency in Hz
@@ -63,17 +66,6 @@ public class P300_Controller : MonoBehaviour {
 	public Color offColour;     //Color when not flashing of the object.
 	public bool SendLiveInfo;   //This determines whether or not to send live information about the set-up to LSL.
 	public int TargetObjectID;  //This can be used to select a 'target' object for individuals to focus on, using the given int ID.
-
-	//Variables for the Boxes
-	/* Grid is mapped out as follows:
-
-        c00     c10     c20
-
-        c01     c11     c21
-
-        c02     c12     c22
-
-     */
 
 	/* Variables shared with LSL Inlet (to be accessed to flash correct cube) */
 	public List<GameObject> object_list = new List<GameObject>();  //Previously 'cube_list'. List of objects that will be flashing, shared with the LSL inlet.
@@ -101,6 +93,15 @@ public class P300_Controller : MonoBehaviour {
 	//Other Scripts to Connect
 	[SerializeField] Setup_P300 setup;
 	[SerializeField] SingleFlash singleFlash;
+
+
+	//
+	// NEW BCIJAM PARAMETERS
+	//
+	[SerializeField] bool showOriginalMatrix = false;
+	public List<Interactable> bciButtonList = new List<Interactable>(); //Used for new "interactable" based bci buttons.
+
+
 
 	private void Awake() {
 		setup = GetComponent<Setup_P300>();
@@ -131,47 +132,27 @@ public class P300_Controller : MonoBehaviour {
 			return;
 		}
 		//Initialize Matrix
-		SetupP300();
-		//SetUpMatrix();
-		//SetUpSingle();
-		//SetUpRC();
+		if(showOriginalMatrix) {
+			SetupP300();
+		}
 
 		SaveCurrentInfo();
-		//Set the colour of the box to the given offColour
-		//TurnOff();
-		//System.Threading.Thread.Sleep(2000);
 		SendInfo();
 	}
 
 
 	private void Update() {
-
 		if(Input.GetKeyDown(KeyCode.S)) {
-			RunSingleFlash();
-			Debug.Log("Single Flash worked!");
+			if(showOriginalMatrix) {
+				RunSingleFlash();
+				Debug.Log("Single flash complete.");
+			}
 		}
 
 		//Resolve new streams - This is just if you need to refresh the streams.
 		if(Input.GetKeyDown(KeyCode.F4)) {
 			inletP300.ResolveOnRequest();
 		}
-
-		////TODO: Redraw Matrix
-		////Select this after changing parameters
-		//if (Input.GetKeyDown(KeyCode.D) && keyLocks[KeyCode.S] == false)
-		//{
-		//    //Check if values are empty
-		//    if (CheckEmpty())
-		//    {
-		//        print("Values must be non-zero and non-negative, please re-enter values and try again...");
-		//        locked_keys = true;
-		//        return;
-		//    }
-		//    keyLocks[KeyCode.D] = true;
-		//    //Run our Redraw function.
-		//    
-		//    RedrawSingleFlash();
-		//}
 
 		//Quit Program 
 		if(Input.GetKeyDown(KeyCode.Q)) {
@@ -252,6 +233,30 @@ public class P300_Controller : MonoBehaviour {
 		locked_keys = !locked_keys;
 	}
 
+	public void RemoveBCIButton(Interactable bciButton) {
+		bciButtonList.RemoveAt(bciButton.p300Id);
 
+		for(int i = 0; i<bciButtonList.Count; i++) {
+			bciButtonList[i].p300Id = i;
+		}
+	}
+
+	public void AddExistingBCIButton(Interactable bciButton) {
+		bciButtonList.Add(bciButton);
+		bciButton.p300Id = bciButtonList.Count-1;
+	}
+
+	public GameObject AddBCIButton(Transform parent = null) {
+		GameObject newBCIButton;
+		if(parent) {
+			newBCIButton = Instantiate(bciButtonPrefab, parent);
+		}
+		else {
+			newBCIButton = Instantiate(bciButtonPrefab);
+		}
+		Interactable interactable = newBCIButton.GetComponent<Interactable>();
+		interactable.Init();
+		return newBCIButton;
+	}
 
 }

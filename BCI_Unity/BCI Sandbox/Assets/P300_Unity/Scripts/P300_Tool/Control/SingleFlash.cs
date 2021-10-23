@@ -62,7 +62,6 @@ public class SingleFlash : MonoBehaviour {
 		else {
 			StopSingleFlashes();
 		}
-
 	}
 
 	public void StopSingleFlashes() {

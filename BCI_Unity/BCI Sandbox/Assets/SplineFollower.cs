@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class SplineFollower : MonoBehaviour {
 
@@ -13,8 +14,7 @@ public class SplineFollower : MonoBehaviour {
 
 	}
 
-	// Update is called once per frame
-	void Update() {
-
+	void FixedUpdate() {
+		//this.transform.position = targetSpline
 	}
 }

@@ -23,41 +23,34 @@ public class Inlet_P300_Event : AStringInlet {
 	public int objectID;
 	private int[] cubeIndices;
 
+	bool initialized = false;
+	P300_Controller p300Flashes;
+
 	//Override the Process call from AInlet.CS
 	protected override void Process(string[] newSample, double timeStamp) {
 		//Avoid doing heavy processing here, use CoRoutines
+		print("Input Received: " + input);
 		input = newSample[0];
 		timestamp = timeStamp;
 
-		GameObject p300Controller = GameObject.FindGameObjectWithTag("BCI");
-		P300_Controller p300Flashes = p300Controller.GetComponent<P300_Controller>();
-		object_list = p300Flashes.object_list;
-		freqHz = p300Flashes.freqHz;
-		onColour = p300Flashes.onColour;
-		offColour = p300Flashes.offColour;
-		numRows = p300Flashes.numRows;
-		cubeIndices = new int[numRows];
+		if(!initialized) {
+			GameObject p300Controller = GameObject.FindGameObjectWithTag("BCI");
+			p300Flashes = p300Controller.GetComponent<P300_Controller>();
+			object_list = p300Flashes.object_list;
+			freqHz = p300Flashes.freqHz;
+			onColour = p300Flashes.onColour;
+			offColour = p300Flashes.offColour;
+			numRows = p300Flashes.numRows;
+			cubeIndices = new int[numRows];
+			initialized = true;
+		}
 
 		//Call CoRoutine to do further processing
 		StartCoroutine("SelectedCube");
 	}
 
 	IEnumerator SelectedCube() {
-		print("Input Received: " + input + " at: " + timestamp);
-
-		//Used for simulation purposes.
-		if(input == "P300 SingleFlash Begins" || input == "P300 RCFlash Begins") {
-			sim_start_time = timestamp;
-			yield return new WaitForSecondsRealtime(2);
-
-		}
-		else if(input == "P300 SingleFlash Ends" || input == "P300 RCFlash Ends") {
-			sim_end_time = timestamp;
-			yield return new WaitForSecondsRealtime(2);
-
-		}
-
-		//If not above, then it will be the following actions below.
+		//print("Input Received: " + input + " at: " + timestamp);
 
 		//Split the string into it's classifier and value
 		string[] input_split = input.Split(',');
@@ -66,17 +59,10 @@ public class Inlet_P300_Event : AStringInlet {
 		//What to do if the classifier is single target value.
 		if(classifier == "s") {
 			objectID = Int32.Parse(input_split[1]);
-			print("\tCube Value: " + objectID.ToString());
-
-			//Do something with the selected object ID!
-
-			//Hardcoded example
-			//object_list[objectID].GetComponent<Renderer>().material.color = Color.red;
+			print("\tSuccessful single target value?: " + objectID.ToString());
 
 			//Using the P300 Event system!
 			P300Events.current.TargetSelectionEvent(objectID);
-
-
 		}
 		else {
 			print("Error: Classifier Value is: " + classifier);

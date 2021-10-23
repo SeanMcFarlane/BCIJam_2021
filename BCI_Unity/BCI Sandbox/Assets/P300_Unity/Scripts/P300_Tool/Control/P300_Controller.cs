@@ -96,7 +96,7 @@ public class P300_Controller : MonoBehaviour {
 
 	/* LSL Variables */
 	private LSLMarkerStream marker;
-	private Inlet_P300 inletP300;
+	private Inlet_P300_Event inletP300;
 
 	//Other Scripts to Connect
 	[SerializeField] Setup_P300 setup;
@@ -113,7 +113,7 @@ public class P300_Controller : MonoBehaviour {
 		refreshRate = resol[3].refreshRate;
 		//Set up LSL Marker Streams (Outlet & Inlet)
 		marker = FindObjectOfType<LSLMarkerStream>();
-		inletP300 = FindObjectOfType<Inlet_P300>();
+		inletP300 = FindObjectOfType<Inlet_P300_Event>();
 
 		//Setting up Keys, to lock other keys when one simulation is being run
 		keyLocks.Add(KeyCode.S, false);

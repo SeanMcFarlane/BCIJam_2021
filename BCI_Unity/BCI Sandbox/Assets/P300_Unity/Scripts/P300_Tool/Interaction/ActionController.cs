@@ -13,7 +13,7 @@ public class ActionController : MonoBehaviour {
 	private void OnP300Action(int id) {
 		//Do whatever actions you want based on the id of the object! Example below just changes it's color. 
 		if(id==this.id) {
-			this.GetComponent<Renderer>().material.color = Color.red;
+			this.GetComponent<Renderer>().material.color = Color.green;
 		}
 	}
 

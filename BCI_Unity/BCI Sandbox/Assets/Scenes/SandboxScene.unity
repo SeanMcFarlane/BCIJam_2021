@@ -913,8 +913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moment: 0
-  StreamName: Muse
-  StreamType: EEG
+  StreamName: output
+  StreamType: unity
   objectID: 0
 --- !u!114 &979654294
 MonoBehaviour:
@@ -929,8 +929,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moment: 0
-  StreamName: Muse
-  StreamType: EEG
+  StreamName: output
+  StreamType: unity
   cubeIndex: 0
 --- !u!1 &1538679303
 GameObject:
@@ -1072,11 +1072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371671609537870714, guid: 070451d8edef52149aec11f4603d0577, type: 3}
       propertyPath: lslStreamName
-      value: Muse
+      value: output
       objectReference: {fileID: 0}
     - target: {fileID: 5371671609537870714, guid: 070451d8edef52149aec11f4603d0577, type: 3}
       propertyPath: lslStreamType
-      value: EEG
+      value: unity
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5371671609537870718, guid: 070451d8edef52149aec11f4603d0577, type: 3}

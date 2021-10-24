@@ -235,15 +235,24 @@ public class P300_Controller : MonoBehaviour {
 
 	public void RemoveBCIButton(Interactable bciButton) {
 		bciButtonList.RemoveAt(bciButton.p300Id);
-
-		for(int i = 0; i<bciButtonList.Count; i++) {
-			bciButtonList[i].p300Id = i;
-		}
+		GameObject.Destroy(bciButton.gameObject);
+		UpkeepBCIButtonList();
 	}
 
 	public void AddExistingBCIButton(Interactable bciButton) {
 		bciButtonList.Add(bciButton);
 		bciButton.p300Id = bciButtonList.Count-1;
+	}
+
+	public void UpkeepBCIButtonList() {
+		for(int i = bciButtonList.Count-1; i >=0; i--) {//Iterating downwards to ensure correct memory access when removing elements
+			if(bciButtonList[i] == null) {
+				bciButtonList.RemoveAt(i);
+			}
+		}
+		for(int i = 0; i<bciButtonList.Count; i++) {
+			bciButtonList[i].p300Id = i;
+		}
 	}
 
 	public GameObject AddBCIButton(Transform parent = null) {

@@ -65,7 +65,17 @@ public class DynamicButtonFlash : MonoBehaviour {
 		}
 	}
 
+	//Lazy and maybe unnecessary, but check for and remove destroyed interactables from the list every time before we do a flash.
+	public void UpkeepButtonsToFlashList() {
+		for(int i = buttonsToFlash.Count-1; i >=0; i--) {//Iterating downwards to ensure correct memory access when removing elements
+			if(buttonsToFlash[i] == null) {
+				buttonsToFlash.RemoveAt(i);
+			}
+		}
+	}
+
 	private void DoNextFlash() {
+		UpkeepButtonsToFlashList();
 		if(buttonsToFlash.Count <= 0) {
 			RefillFlashQueue();
 		}

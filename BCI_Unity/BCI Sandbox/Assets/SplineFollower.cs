@@ -13,8 +13,10 @@ public class SplineFollower : MonoBehaviour {
 	[SerializeField] [ReadOnly] private Spline spl;
 
 	[SerializeField] private float vertOffset;
+	[SerializeField] private float movementSpeed = 6f;
 
-	[SerializeField] private float distanceAlongSpline;
+
+	[SerializeField] [ReadOnly] private float distanceAlongSpline;
 	[SerializeField] [ReadOnly] private float localDistanceAlongSpline;
 
 	[SerializeField] [ReadOnly] private List<float> segmentLengths;
@@ -41,11 +43,9 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		distanceAlongSpline += Time.fixedDeltaTime*3f;
+		distanceAlongSpline += Time.fixedDeltaTime*movementSpeed;
 		SetPositionOnSpline();
 	}
-
-	//Todo: create a system to store arc lengths in an array and subtract array values to find the current index.
 
 	void SetPositionOnSpline() {
 		float verticalOffset = ssc.colliderOffset + vertOffset;

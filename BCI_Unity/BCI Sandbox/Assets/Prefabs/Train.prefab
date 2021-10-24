@@ -102,6 +102,7 @@ MonoBehaviour:
     m_IsOpenEnded: 0
     m_ControlPoints: []
   vertOffset: 0.5
+  movementSpeed: 6
   distanceAlongSpline: 0
   localDistanceAlongSpline: 0
   segmentLengths: []

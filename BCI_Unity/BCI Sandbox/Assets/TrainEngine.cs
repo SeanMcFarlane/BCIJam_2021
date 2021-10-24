@@ -12,19 +12,17 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] private float fullWheelSpeedThreshold = 10f;
 
 	//Jump parameters
-	[SerializeField] private float jumpPower = 3;
-	[SerializeField] private float jumpGravity = 0.5f;
-	[SerializeField] [ReadOnly] private float jumpVelocity;
+	[SerializeField] private float jumpPower = 6;
 
 	//Movespeed and acceleration
-	[SerializeField] [ReadOnly] private float movementSpeed = 0;
+	[SerializeField] [ReadOnly] public float movementSpeed = 0;
 	[SerializeField] private float maxSpeed = 50;
 	[SerializeField] private float[] throttleLevels = { -2f, -1f, 0f, 0.25f, 0.5f };
-	[SerializeField] private int currentThrottleLevel = 2; // acceleration of 0 by default
+	[SerializeField] public int currentThrottleLevel = 2; // acceleration of 0 by default
 
 	public void Jump() {
 		if(mySplineFollower.extraVertOffset >0) { return; }
-		jumpVelocity = jumpPower;
+		mySplineFollower.jumpVelocity = jumpPower;
 	}
 
 	public void ThrottleUp() {
@@ -66,10 +64,6 @@ public class TrainEngine : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate() {
-		jumpVelocity -= jumpGravity*Time.fixedDeltaTime;
-
-		mySplineFollower.extraVertOffset+=jumpVelocity*Time.fixedDeltaTime;
-		mySplineFollower.extraVertOffset = Mathf.Clamp(mySplineFollower.extraVertOffset, 0, float.MaxValue);
 		movementSpeed += throttleLevels[currentThrottleLevel]*Time.fixedDeltaTime;
 		mySplineFollower.distanceAlongSpline += movementSpeed*Time.fixedDeltaTime;
 		movementSpeed = Mathf.Clamp(movementSpeed, 0, maxSpeed);

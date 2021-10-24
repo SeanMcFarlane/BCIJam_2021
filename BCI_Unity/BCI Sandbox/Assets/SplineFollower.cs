@@ -16,6 +16,10 @@ public class SplineFollower : MonoBehaviour {
 	[SerializeField] [ReadOnly] private Spline spl;
 
 	[SerializeField] private float vertOffset;
+
+	//Jump parameters
+	[SerializeField] private float jumpGravity = 9.86f;
+	[SerializeField] [ReadOnly] public float jumpVelocity;
 	[SerializeField] [ReadOnly] public float extraVertOffset;
 
 	[SerializeField] public float distanceAlongSpline;
@@ -42,6 +46,9 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		jumpVelocity -= jumpGravity*Time.fixedDeltaTime;
+		extraVertOffset+=jumpVelocity*Time.fixedDeltaTime;
+		extraVertOffset = Mathf.Clamp(extraVertOffset, 0, float.MaxValue);
 		SetPositionOnSpline();
 	}
 

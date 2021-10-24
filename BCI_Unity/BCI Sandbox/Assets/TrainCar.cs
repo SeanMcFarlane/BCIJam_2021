@@ -9,6 +9,11 @@ public class TrainCar : MonoBehaviour {
 	[SerializeField] SplineFollower leader;
 	[SerializeField] float horizOffset;
 
+	[SerializeField] private float jumpDelay;
+	[SerializeField] private float jumpPower = 6;
+	[SerializeField] [ReadOnly] private float jumpDelayTimer;
+
+
 	private void Init() {
 		if(initialized) return;
 		mySplineFollower = this.GetComponent<SplineFollower>();
@@ -20,6 +25,18 @@ public class TrainCar : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		if(jumpDelayTimer == 0 && mySplineFollower.extraVertOffset <= 0 && leader.jumpVelocity > 0) {
+			jumpDelayTimer = jumpDelay;
+		}
+
+		if(jumpDelayTimer > 0) {
+			jumpDelayTimer-=Time.fixedDeltaTime;
+			if(jumpDelayTimer <=0) {
+				mySplineFollower.jumpVelocity = jumpPower;
+				jumpDelayTimer = 0;
+			}
+		}
+
 		this.mySplineFollower.distanceAlongSpline = Mathf.Clamp(leader.distanceAlongSpline-horizOffset, 0, float.MaxValue);
 	}
 

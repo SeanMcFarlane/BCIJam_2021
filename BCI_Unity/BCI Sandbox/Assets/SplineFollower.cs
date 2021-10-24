@@ -18,7 +18,7 @@ public class SplineFollower : MonoBehaviour {
 	[SerializeField] private float movementSpeed = 6f;
 
 
-	[SerializeField] [ReadOnly] private float distanceAlongSpline;
+	[SerializeField] [ReadOnly] public float distanceAlongSpline;
 	[SerializeField] [ReadOnly] private float localDistanceAlongSpline;
 
 	[SerializeField] [ReadOnly] private List<float> segmentLengths;
@@ -45,7 +45,6 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		distanceAlongSpline += Time.fixedDeltaTime*movementSpeed;
 		SetPositionOnSpline();
 	}
 
@@ -69,7 +68,7 @@ public class SplineFollower : MonoBehaviour {
 			return;
 		}
 
-		Debug.Log("Located spline pos: Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
+		//Debug.Log("Located spline pos: Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
 
 		int i = currentSplineSection;
 		int spriteID = spl.GetSpriteIndex(i);

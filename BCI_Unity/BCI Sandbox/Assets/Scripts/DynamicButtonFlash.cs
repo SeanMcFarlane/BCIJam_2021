@@ -46,7 +46,7 @@ public class DynamicButtonFlash : MonoBehaviour {
 	}
 
 	public void Update() {
-		if(active) {
+		if(active && p300_Controller.bciButtonList.Count > 0) {
 			if(!wasActive) {
 				wasActive = true;
 				p300_Controller.WriteMarker("P300 Dynamic Flash Started");

@@ -16,11 +16,14 @@ public class SplineFollower : MonoBehaviour {
 	[SerializeField] [ReadOnly] private Spline spl;
 
 	[SerializeField] private float vertOffset;
+	[SerializeField] [ReadOnly] public float extraVertOffset;
 
 	[SerializeField] public float distanceAlongSpline;
 	[SerializeField] [ReadOnly] private float localDistanceAlongSpline;
 
 	void SetTarget(GameObject newTarget) {
+
+		Debug.Log("Set new spline target: "+newTarget.name, newTarget);
 		target = newTarget;
 		ssc = target.GetComponent<SpriteShapeController>();
 		spl = ssc.spline;
@@ -47,7 +50,7 @@ public class SplineFollower : MonoBehaviour {
 			SetTarget(targetSC.targetNextSpline.gameObject);//Move to next Spline altogether.
 		}
 
-		float verticalOffset = ssc.colliderOffset + vertOffset;
+		float verticalOffset = ssc.colliderOffset + vertOffset + extraVertOffset;
 		int pointCount = spl.GetPointCount();
 
 		int currentSplineSection = -1;
@@ -55,7 +58,7 @@ public class SplineFollower : MonoBehaviour {
 		localDistanceAlongSpline = distanceAlongSpline - targetSC.startDistance;
 
 		//Check each line segment length, remove it from total distance and go to next line segment until you find the segment you are on.
-		for(int n = targetSC.startVertex; n<targetSC.segmentLengths.Count; ++n) {
+		for(int n = targetSC.startVertex; n<targetSC.segmentLengths.Count; n++) {
 			if(localDistanceAlongSpline < targetSC.segmentLengths[n]) {//Found the section the player is currently on.
 				currentSplineSection = n;
 				break;
@@ -63,12 +66,15 @@ public class SplineFollower : MonoBehaviour {
 			else localDistanceAlongSpline-=targetSC.segmentLengths[n];//Move to next segment, remove current segment length from total distance
 		}
 
+		Debug.Log("TotalDistance["+distanceAlongSpline+"]");
+		Debug.Log("Spline Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
+
+
 		if(currentSplineSection == -1) {
 			Debug.LogError("Could not locate position on spline. Probably exceeded total length.");
 			return;
 		}
 
-		//Debug.Log("Located spline pos: Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
 
 		int i = currentSplineSection;
 		int spriteID = spl.GetSpriteIndex(i);

@@ -1111,6 +1111,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &6350023613111318127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6774315652390164758}
+  m_Layer: 0
+  m_Name: TrainButtons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6774315652390164758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6350023613111318127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8790742156924200256}
+  - {fileID: 8790742157174332914}
+  - {fileID: 8790742157742344182}
+  m_Father: {fileID: 8213780511001812065}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7170537017495437678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,9 +1340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7632204719620713080}
-  - {fileID: 8790742156924200256}
-  - {fileID: 8790742157174332914}
-  - {fileID: 8790742157742344182}
+  - {fileID: 6774315652390164758}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.414}
@@ -1763,6 +1794,7 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
   vertOffset: 0.5
+  extraVertOffset: 0
   distanceAlongSpline: 0
   localDistanceAlongSpline: 0
 --- !u!114 &1667771507037062663
@@ -1779,7 +1811,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySplineFollower: {fileID: 8213780511001812078}
   throttleAnimator: {fileID: 1667771505848971864}
+  trainSpriteAnimator: {fileID: 0}
+  fullWheelSpeedThreshold: 10
+  jumpPower: 6
+  jumpGravity: 9.86
+  jumpVelocity: 0
   movementSpeed: 0
+  maxSpeed: 50
   throttleLevels:
   - -1
   - -0.5
@@ -1815,12 +1853,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8790742156924200269}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2, y: 0.49999997, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 8213780511001812065}
-  m_RootOrder: 1
+  m_Father: {fileID: 6774315652390164758}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6662475510124585247
 MonoBehaviour:
@@ -2027,12 +2065,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8790742157174332927}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 0.49999994, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 8213780511001812065}
-  m_RootOrder: 2
+  m_Father: {fileID: 6774315652390164758}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6662475510370458029
 MonoBehaviour:
@@ -2239,12 +2277,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8790742157742344187}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.25000033, y: 1.4999999, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 8213780511001812065}
-  m_RootOrder: 3
+  m_Father: {fileID: 6774315652390164758}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6662475508728136617
 MonoBehaviour:
@@ -2351,6 +2389,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1282496652976438975}
         m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
         m_MethodName: SuccessReactionVisual
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1667771507037062663}
+        m_TargetAssemblyTypeName: TrainEngine, Assembly-CSharp
+        m_MethodName: Jump
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

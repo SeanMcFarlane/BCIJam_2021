@@ -45,6 +45,10 @@ public class SplineConnector : MonoBehaviour {
 	}
 
 	void Init() {
+		if(targetNextSpline == null) {
+			sourceVertexIndex = -1;
+			destinationVertexIndex = -1;
+		}
 		mySpline = GetComponent<SpriteShapeController>();
 		Spline spl = mySpline.spline;
 		int pointCount = spl.GetPointCount();
@@ -53,7 +57,7 @@ public class SplineConnector : MonoBehaviour {
 		totalLength = 0;
 		lengthBeforeStart = 0;
 		for(int i = 0; i<pointCount; ++i) {
-			if(i >= sourceVertexIndex) break;//Stop counting at the point where you are supposed to switch to the next SpriteShape.
+			if(i >= sourceVertexIndex && sourceVertexIndex != -1) break;//Stop counting at the point where you are supposed to switch to the next SpriteShape.
 			SplineArcLengthTable arcTable = SplineArcLengthTable.Generate(ARC_LENGTH_RESOLUTION, spl, i);
 			float fullArcLength = arcTable.scalarToDistance(1.0f);
 			segmentLengths.Add(fullArcLength);

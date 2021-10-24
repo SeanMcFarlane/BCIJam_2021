@@ -6,10 +6,26 @@ public class TrainEngine : MonoBehaviour {
 	bool initialized = false;
 	[SerializeField] [ReadOnly] SplineFollower mySplineFollower;
 	[SerializeField] [ReadOnly] Animator throttleAnimator;
-	[SerializeField] private float movementSpeed = 0;
+	[SerializeField] [ReadOnly] Animator trainSpriteAnimator;
 
-	[SerializeField] private float[] throttleLevels = { -1, -0.5f, 0, 0.5f, 1 };
+	//Visual tunings
+	[SerializeField] private float fullWheelSpeedThreshold = 10f;
+
+	//Jump parameters
+	[SerializeField] private float jumpPower = 3;
+	[SerializeField] private float jumpGravity = 0.5f;
+	[SerializeField] [ReadOnly] private float jumpVelocity;
+
+	//Movespeed and acceleration
+	[SerializeField] [ReadOnly] private float movementSpeed = 0;
+	[SerializeField] private float maxSpeed = 50;
+	[SerializeField] private float[] throttleLevels = { -2f, -1f, 0f, 0.25f, 0.5f };
 	[SerializeField] private int currentThrottleLevel = 2; // acceleration of 0 by default
+
+	public void Jump() {
+		if(mySplineFollower.extraVertOffset >0) { return; }
+		jumpVelocity = jumpPower;
+	}
 
 	public void ThrottleUp() {
 		if(currentThrottleLevel < throttleLevels.Length-1) {
@@ -27,6 +43,10 @@ public class TrainEngine : MonoBehaviour {
 		if(initialized) return;
 		Transform throttleTransform = transform.Find("TrainSprite/ThrottleIndicator");
 		throttleAnimator = throttleTransform.GetComponent<Animator>();
+
+		Transform trainSpriteTransform = transform.Find("TrainSprite");
+		trainSpriteAnimator = trainSpriteTransform.GetComponent<Animator>();
+
 		mySplineFollower = this.GetComponent<SplineFollower>();
 		initialized = true;
 	}
@@ -40,12 +60,18 @@ public class TrainEngine : MonoBehaviour {
 		//Lazy way to select a visual state - pause the animation and set the desired keyframe directly. TODO do a proper state machine in the future.
 		float animationFrameTime = 0.2f+ (Mathf.Round(((float)currentThrottleLevel/(float)throttleLevels.Length)*5f))/5f;
 		throttleAnimator.Play("TrainThrottle", 0, animationFrameTime);
+
+		trainSpriteAnimator.SetFloat("Speed", movementSpeed/fullWheelSpeedThreshold);
 	}
 
 	// Update is called once per frame
 	void FixedUpdate() {
+		jumpVelocity -= jumpGravity*Time.fixedDeltaTime;
+
+		mySplineFollower.extraVertOffset+=jumpVelocity*Time.fixedDeltaTime;
+		mySplineFollower.extraVertOffset = Mathf.Clamp(mySplineFollower.extraVertOffset, 0, float.MaxValue);
 		movementSpeed += throttleLevels[currentThrottleLevel]*Time.fixedDeltaTime;
 		mySplineFollower.distanceAlongSpline += movementSpeed*Time.fixedDeltaTime;
-		movementSpeed = Mathf.Clamp(movementSpeed, 0, 100f);
+		movementSpeed = Mathf.Clamp(movementSpeed, 0, maxSpeed);
 	}
 }

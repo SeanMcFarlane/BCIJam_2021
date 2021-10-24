@@ -8,8 +8,6 @@ public class SplineFollower : MonoBehaviour {
 	static int ARC_LENGTH_RESOLUTION = 1000;
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
-
-
 	[SerializeField] [ReadOnly] private float angle;
 	[SerializeField] [ReadOnly] private Vector3 lastFramePos;
 	[SerializeField] private float previousPositionSampleInterval = 0.25f;//For determining the direction of travel to rotate sprite
@@ -49,13 +47,13 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		SetPositionOnSpline();
+
 		previousPositionSampleTimer-=Time.fixedDeltaTime;
 		if(previousPositionSampleTimer <= 0) {
 			lastFramePos = transform.position;
 			previousPositionSampleTimer = previousPositionSampleInterval;
 		}
-
-		SetPositionOnSpline();
 	}
 
 	void SetPositionOnSpline() {
@@ -126,12 +124,7 @@ public class SplineFollower : MonoBehaviour {
 		this.transform.position = curPoint;
 
 		Vector3 prevPoint;
-		if(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS >1) {
-			prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
-		}
-		else {
-			prevPoint = lastFramePos;
-		}
+		prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
 
 		Vector3 tangent = curPoint - prevPoint;
 		if(tangent.magnitude > 0.001f) {
@@ -139,7 +132,7 @@ public class SplineFollower : MonoBehaviour {
 		}
 
 		transform.rotation = Quaternion.Euler(0, 0, angle);
-		transform.localPosition += transform.up*verticalOffset;
+		transform.position += transform.up*verticalOffset;
 	}
 }
 

@@ -4,42 +4,38 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 public class SplineFollower : MonoBehaviour {
+	bool initialized = false;
 
-	static int ARC_LENGTH_RESOLUTION = 1000;
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
 	[SerializeField] [ReadOnly] private float angle;
 
 	[SerializeField] private GameObject target;
+	[SerializeField] [ReadOnly] private SplineConnector targetSC;
 	[SerializeField] [ReadOnly] private SpriteShapeController ssc;
 	[SerializeField] [ReadOnly] private Spline spl;
 
 	[SerializeField] private float vertOffset;
 
-	[SerializeField] [ReadOnly] public float distanceAlongSpline;
+	[SerializeField] public float distanceAlongSpline;
 	[SerializeField] [ReadOnly] private float localDistanceAlongSpline;
 
-	[SerializeField] [ReadOnly] private List<float> segmentLengths;
-	[SerializeField] [ReadOnly] private List<SplineArcLengthTable> splineArcLengthTables;
-
+	void SetTarget(GameObject newTarget) {
+		target = newTarget;
+		ssc = target.GetComponent<SpriteShapeController>();
+		spl = ssc.spline;
+		targetSC = target.GetComponent<SplineConnector>();
+	}
 
 	// Start is called before the first frame update
 	void Start() {
-		ssc = target.GetComponent<SpriteShapeController>();
-		spl = ssc.spline;
 		Init();
 	}
 
 	void Init() {
-		int pointCount = spl.GetPointCount();
-		segmentLengths = new List<float>();
-		splineArcLengthTables = new List<SplineArcLengthTable>();
-		for(int i = 0; i<pointCount; ++i) {
-			SplineArcLengthTable arcTable = SplineArcLengthTable.Generate(ARC_LENGTH_RESOLUTION, spl, i);
-			float fullArcLength = arcTable.scalarToDistance(1.0f);
-			segmentLengths.Add(fullArcLength);
-			splineArcLengthTables.Add(arcTable);
-		}
+		if(initialized) return;
+		initialized = true;
+		SetTarget(target);
 	}
 
 	void FixedUpdate() {
@@ -47,18 +43,24 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void SetPositionOnSpline() {
+		if(distanceAlongSpline > targetSC.startDistance+targetSC.totalLength) {
+			SetTarget(targetSC.targetNextSpline.gameObject);//Move to next Spline altogether.
+		}
+
 		float verticalOffset = ssc.colliderOffset + vertOffset;
 		int pointCount = spl.GetPointCount();
 
 		int currentSplineSection = -1;
-		localDistanceAlongSpline = distanceAlongSpline;
+		//Subtract all previous spriteshapes traversed, and add some length to skip to the right spot on the next spline
+		localDistanceAlongSpline = distanceAlongSpline - targetSC.startDistance;
+
 		//Check each line segment length, remove it from total distance and go to next line segment until you find the segment you are on.
-		for(int n = 0; n<segmentLengths.Count; ++n) {
-			if(localDistanceAlongSpline < segmentLengths[n]) {//Found the section the player is currently on.
+		for(int n = targetSC.startVertex; n<targetSC.segmentLengths.Count; ++n) {
+			if(localDistanceAlongSpline < targetSC.segmentLengths[n]) {//Found the section the player is currently on.
 				currentSplineSection = n;
 				break;
 			}
-			else localDistanceAlongSpline-=segmentLengths[n];//Move to next segment, remove current segment length from total distance
+			else localDistanceAlongSpline-=targetSC.segmentLengths[n];//Move to next segment, remove current segment length from total distance
 		}
 
 		if(currentSplineSection == -1) {
@@ -107,14 +109,14 @@ public class SplineFollower : MonoBehaviour {
 		Vector3 startTangent = spl.GetRightTangent(curIdx) + startPos;
 		Vector3 endTangent = spl.GetLeftTangent(nextIdx) + endPos;
 
-		if(localDistanceAlongSpline <0 || localDistanceAlongSpline  > segmentLengths[i]) {
+		if(localDistanceAlongSpline <0 || localDistanceAlongSpline  > targetSC.segmentLengths[i]) {
 			Debug.LogError("Not within bounds of predicted spline segment.");
 		}
-		Vector3 curPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline));
+		Vector3 curPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, targetSC.splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline));
 		this.transform.position = curPoint;
 
 		Vector3 prevPoint;
-		prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
+		prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, targetSC.splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
 
 		Vector3 tangent = curPoint - prevPoint;
 		if(tangent.magnitude > 0.001f) {

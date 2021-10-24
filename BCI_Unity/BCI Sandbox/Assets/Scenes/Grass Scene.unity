@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 1288863935}
   - component: {fileID: 1288863937}
   - component: {fileID: 1288863936}
+  - component: {fileID: 1288863938}
   m_Layer: 0
   m_Name: GrassShape
   m_TagString: Untagged
@@ -866,9 +867,9 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
     - position: {x: 1864.9633, y: -144.57729, z: 0}
-      leftTangent: {x: 0, y: 0, z: 0}
-      rightTangent: {x: 0, y: 0, z: 0}
-      mode: 0
+      leftTangent: {x: -40.910034, y: 28.610458, z: 0}
+      rightTangent: {x: -1.8795166, y: -188.50655, z: 0}
+      mode: 2
       height: 1
       bevelCutoff: 0
       bevelSize: 0
@@ -996,8 +997,67 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 12706a4483c34e744bc3b1ff06a767dc, type: 3}
   - {fileID: 21300000, guid: 4a99345edd5eacd40989642fcd8fc248, type: 3}
   m_LocalAABB:
-    m_Center: {x: 899.954, y: -776.2871, z: -0.0002504}
-    m_Extent: {x: 999.40027, y: 869.55945, z: 0.0002504}
+    m_Center: {x: 899.95386, y: -776.2871, z: -0.0002504}
+    m_Extent: {x: 999.40015, y: 869.55945, z: 0.0002504}
+--- !u!114 &1288863938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288863934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171d3fc23115c504580a103f2386413f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySpline: {fileID: 1288863936}
+  targetNextSpline: {fileID: 1681478225}
+  startVertex: 0
+  sourceVertexIndex: 38
+  destinationVertexIndex: 0
+  segmentLengths:
+  - 11.32181
+  - 6.783122
+  - 8.0137615
+  - 4.469397
+  - 6.190667
+  - 12.318763
+  - 10.077823
+  - 8.822509
+  - 14.15319
+  - 20.052301
+  - 43.55899
+  - 6.569399
+  - 27.61928
+  - 19.605173
+  - 22.2595
+  - 17.27332
+  - 18.564035
+  - 17.877604
+  - 29.73847
+  - 28.841562
+  - 39.624966
+  - 29.15284
+  - 36.122967
+  - 45.559544
+  - 42.2443
+  - 56.50863
+  - 64.16043
+  - 145.8333
+  - 99.696106
+  - 71.035416
+  - 94.373146
+  - 128.33723
+  - 145.67714
+  - 129.74074
+  - 112.96698
+  - 143.05565
+  - 134.2365
+  - 136.33246
+  lengthBeforeStart: 0
+  totalLength: 1988.7688
+  startDistance: 0
 --- !u!1 &1379358301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,6 +1308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   target: {fileID: 1288863934}
+  targetSC: {fileID: 0}
   ssc: {fileID: 0}
   spl:
     m_IsOpenEnded: 0
@@ -1255,7 +1316,6 @@ MonoBehaviour:
   vertOffset: 0.5
   distanceAlongSpline: 0
   localDistanceAlongSpline: 0
-  segmentLengths: []
 --- !u!4 &1462286853
 Transform:
   m_ObjectHideFlags: 0
@@ -1379,6 +1439,7 @@ GameObject:
   - component: {fileID: 1681478224}
   - component: {fileID: 1681478226}
   - component: {fileID: 1681478225}
+  - component: {fileID: 1681478227}
   m_Layer: 0
   m_Name: GrassShape2
   m_TagString: Untagged
@@ -1416,9 +1477,9 @@ MonoBehaviour:
     m_IsOpenEnded: 0
     m_ControlPoints:
     - position: {x: 1864.9633, y: -144.57729, z: 0}
-      leftTangent: {x: -10.21228, y: 5.393036, z: 0}
-      rightTangent: {x: 31.675781, y: -16.727829, z: 0}
-      mode: 1
+      leftTangent: {x: -3.4188232, y: -13.424179, z: 0}
+      rightTangent: {x: 40.910034, y: -28.610458, z: -0}
+      mode: 2
       height: 1
       bevelCutoff: 0
       bevelSize: 0
@@ -1796,8 +1857,29 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 12706a4483c34e744bc3b1ff06a767dc, type: 3}
   - {fileID: 21300000, guid: 4a99345edd5eacd40989642fcd8fc248, type: 3}
   m_LocalAABB:
-    m_Center: {x: 2237.5125, y: -495.1831, z: -0.00015015}
-    m_Extent: {x: 2237.5125, y: 1500.9719, z: 0.00015015}
+    m_Center: {x: 2237.5125, y: -495.18286, z: -0.00015015}
+    m_Extent: {x: 2237.5125, y: 1500.9722, z: 0.00015015}
+--- !u!114 &1681478227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681478223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171d3fc23115c504580a103f2386413f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySpline: {fileID: 0}
+  targetNextSpline: {fileID: 0}
+  startVertex: 0
+  sourceVertexIndex: 0
+  destinationVertexIndex: 0
+  segmentLengths: []
+  lengthBeforeStart: 0
+  totalLength: 0
+  startDistance: 1988.7688
 --- !u!1001 &1713422931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1813,6 +1895,102 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1230043173
       objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013894, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013894, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013894, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013894, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013894, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505837013895, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbe5ef26038768948a8b6e6afa0c9e6a, type: 3}
+    - target: {fileID: 1667771505882014584, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505882014584, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505882014584, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505882014584, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505882014584, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771505882014585, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bbe5ef26038768948a8b6e6afa0c9e6a, type: 3}
+    - target: {fileID: 1667771506566143630, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506566143630, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506566143630, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506566143630, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506566143630, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506566143631, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d79cfc9f5bcf278438d3550bf05ce95a, type: 3}
+    - target: {fileID: 1667771506878419902, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506878419902, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506878419902, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506878419902, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506878419902, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771506878419903, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d79cfc9f5bcf278438d3550bf05ce95a, type: 3}
     - target: {fileID: 8213780511001812065, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1865,6 +2043,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1288863934}
+    - target: {fileID: 8213780511001812078, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
+      propertyPath: distanceAlongSpline
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88926eb62b6ad9541993aa8093cfca30, type: 3}
 --- !u!114 &1713422932 stripped

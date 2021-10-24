@@ -25,7 +25,6 @@ public class TrainEngine : MonoBehaviour {
 
 	private void Init() {
 		if(initialized) return;
-		//TrainSprite/ThrottleIndicator
 		Transform throttleTransform = transform.Find("TrainSprite/ThrottleIndicator");
 		throttleAnimator = throttleTransform.GetComponent<Animator>();
 		mySplineFollower = this.GetComponent<SplineFollower>();

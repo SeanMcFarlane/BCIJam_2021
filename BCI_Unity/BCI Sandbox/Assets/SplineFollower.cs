@@ -8,15 +8,19 @@ public class SplineFollower : MonoBehaviour {
 	static int ARC_LENGTH_RESOLUTION = 1000;
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
-	[SerializeField] [ReadOnly] private Vector3 prevPos;
+
+
+	[SerializeField] [ReadOnly] private float angle;
+	[SerializeField] [ReadOnly] private Vector3 lastFramePos;
+	[SerializeField] private float previousPositionSampleInterval = 0.25f;//For determining the direction of travel to rotate sprite
+	[SerializeField] [ReadOnly] private float previousPositionSampleTimer;//For determining the direction of travel to rotate sprite
+
 
 	[SerializeField] private GameObject target;
 	[SerializeField] [ReadOnly] private SpriteShapeController ssc;
 	[SerializeField] [ReadOnly] private Spline spl;
 
 	[SerializeField] private float vertOffset;
-	[SerializeField] private float movementSpeed = 6f;
-
 
 	[SerializeField] [ReadOnly] public float distanceAlongSpline;
 	[SerializeField] [ReadOnly] private float localDistanceAlongSpline;
@@ -45,6 +49,12 @@ public class SplineFollower : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		previousPositionSampleTimer-=Time.fixedDeltaTime;
+		if(previousPositionSampleTimer <= 0) {
+			lastFramePos = transform.position;
+			previousPositionSampleTimer = previousPositionSampleInterval;
+		}
+
 		SetPositionOnSpline();
 	}
 
@@ -112,26 +122,24 @@ public class SplineFollower : MonoBehaviour {
 		if(localDistanceAlongSpline <0 || localDistanceAlongSpline  > segmentLengths[i]) {
 			Debug.LogError("Not within bounds of predicted spline segment.");
 		}
-
 		Vector3 curPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline));
 		this.transform.position = curPoint;
 
 		Vector3 prevPoint;
-		if(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS >0) {
+		if(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS >1) {
 			prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
 		}
 		else {
-			prevPoint = prevPos;
+			prevPoint = lastFramePos;
 		}
 
 		Vector3 tangent = curPoint - prevPoint;
-		float angle = SplineUtils.Get2DAngle(tangent);
+		if(tangent.magnitude > 0.001f) {
+			angle = SplineUtils.Get2DAngle(tangent);
+		}
 
 		transform.rotation = Quaternion.Euler(0, 0, angle);
 		transform.localPosition += transform.up*verticalOffset;
-
-		prevPos = transform.position;
-
 	}
 }
 

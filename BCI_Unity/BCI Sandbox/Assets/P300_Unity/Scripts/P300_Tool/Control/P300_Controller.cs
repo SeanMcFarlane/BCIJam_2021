@@ -160,9 +160,9 @@ public class P300_Controller : MonoBehaviour {
 			marker.Write("Quit");
 			marker = null;
 			Application.Quit();
-			if(Application.isEditor) {
-				EditorApplication.ExitPlaymode();
-			}
+#if UNITY_EDITOR
+			EditorApplication.ExitPlaymode();
+#endif
 		}
 	}
 

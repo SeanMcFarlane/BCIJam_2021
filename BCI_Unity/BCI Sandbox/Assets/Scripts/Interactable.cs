@@ -145,7 +145,7 @@ public class Interactable : MonoBehaviour {
 			mySprite.color = Color.white;
 			whiteFlashTimer -= Time.deltaTime;
 		}
-		else {
+		else { //TODO: stop this from overriding hover highlight for mouse users
 			mySprite.color = myBaseColor;
 		}
 

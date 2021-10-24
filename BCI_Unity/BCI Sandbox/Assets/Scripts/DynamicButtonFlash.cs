@@ -38,10 +38,10 @@ public class DynamicButtonFlash : MonoBehaviour {
 
 		numTrials = numSamples * p300_Controller.bciButtonList.Count;
 
-		print("---------- DYNAMIC FLASH DETAILS ----------");
-		print("Number of Trials will be: " + numTrials);
-		print("Number of flashes for each cell: " + numSamples);
-		print("--------------------------------------");
+		//print("---------- DYNAMIC FLASH DETAILS ----------");
+		//print("Number of Trials will be: " + numTrials);
+		//print("Number of flashes for each cell: " + numSamples);
+		//print("--------------------------------------");
 		TurnOffAllDynamic();
 	}
 

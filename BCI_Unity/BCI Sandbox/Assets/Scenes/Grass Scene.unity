@@ -1740,7 +1740,37 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 4267.1553, y: 1005.41473, z: 0}
+    - position: {x: 4280.007, y: 995.3012, z: 0}
+      leftTangent: {x: -10.964596, y: -10.662609, z: -0}
+      rightTangent: {x: 14.185059, y: 13.794373, z: 0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 4313.386, y: 1022.5246, z: 0}
+      leftTangent: {x: -23.71095, y: -16.435902, z: -0}
+      rightTangent: {x: 18.882324, y: 13.088806, z: 0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 4370.651, y: 1037.2966, z: 0}
+      leftTangent: {x: -29.672602, y: -0.25937936, z: -0}
+      rightTangent: {x: 36.657227, y: 0.32043457, z: 0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 5332.011, y: 1038.7042, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -1750,8 +1780,28 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
+    - position: {x: 5518.588, y: 923.62164, z: 0}
+      leftTangent: {x: -59.89502, y: 41.912537, z: 0}
+      rightTangent: {x: 28.752455, y: -20.120008, z: -0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 5869.045, y: 804.4629, z: 0}
+      leftTangent: {x: -77.41455, y: 75.352234, z: 0}
+      rightTangent: {x: 486.0955, y: -473.14597, z: -0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
     - position: {x: 4474.3945, y: -1995.6107, z: 0}
-      leftTangent: {x: 1.3564453, y: 4.9710693, z: 0}
+      leftTangent: {x: 1.0742188, y: 3.9354248, z: 0}
       rightTangent: {x: -3.1796875, y: -11.655151, z: 0}
       mode: 1
       height: 1
@@ -1851,8 +1901,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 12706a4483c34e744bc3b1ff06a767dc, type: 3}
   - {fileID: 21300000, guid: 4a99345edd5eacd40989642fcd8fc248, type: 3}
   m_LocalAABB:
-    m_Center: {x: 2237.5125, y: -495.18286, z: -0.00015015}
-    m_Extent: {x: 2237.5125, y: 1500.9722, z: 0.00015015}
+    m_Center: {x: 2974.005, y: -478.43127, z: -0.00015015}
+    m_Extent: {x: 2974.005, y: 1517.7754, z: 0.00015015}
 --- !u!114 &1681478227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2274,7 +2324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTimePassed: 0
-  distanceToWin: 5175
+  distanceToWin: 5620
   victoryScreen: {fileID: 748208598}
   victoryScreenText: {fileID: 178860674}
   trainSplineFollower: {fileID: 1713422932}

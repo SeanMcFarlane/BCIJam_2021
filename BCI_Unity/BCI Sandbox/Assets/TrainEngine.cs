@@ -38,9 +38,8 @@ public class TrainEngine : MonoBehaviour {
 
 	private void Update() {
 		throttleAnimator.speed = 0f;
-		//Lazy way to select a visual state - stop the animation and set the desired keyframe directly. TODO do a proper state machine in the future.
+		//Lazy way to select a visual state - pause the animation and set the desired keyframe directly. TODO do a proper state machine in the future.
 		float animationFrameTime = 0.0999f+(float)currentThrottleLevel/(float)throttleLevels.Length;
-		Debug.Log(animationFrameTime);
 		throttleAnimator.Play("TrainThrottle", 0, animationFrameTime);
 	}
 

@@ -9,10 +9,6 @@ public class SplineFollower : MonoBehaviour {
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
 	[SerializeField] [ReadOnly] private float angle;
-	[SerializeField] [ReadOnly] private Vector3 lastFramePos;
-	[SerializeField] private float previousPositionSampleInterval = 0.25f;//For determining the direction of travel to rotate sprite
-	[SerializeField] [ReadOnly] private float previousPositionSampleTimer;//For determining the direction of travel to rotate sprite
-
 
 	[SerializeField] private GameObject target;
 	[SerializeField] [ReadOnly] private SpriteShapeController ssc;
@@ -48,12 +44,6 @@ public class SplineFollower : MonoBehaviour {
 
 	void FixedUpdate() {
 		SetPositionOnSpline();
-
-		previousPositionSampleTimer-=Time.fixedDeltaTime;
-		if(previousPositionSampleTimer <= 0) {
-			lastFramePos = transform.position;
-			previousPositionSampleTimer = previousPositionSampleInterval;
-		}
 	}
 
 	void SetPositionOnSpline() {

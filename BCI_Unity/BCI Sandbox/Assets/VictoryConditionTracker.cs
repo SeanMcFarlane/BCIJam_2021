@@ -12,8 +12,24 @@ public class VictoryConditionTracker : MonoBehaviour {
 	[SerializeField] GameObject victoryScreen;
 	[SerializeField] TextMeshProUGUI victoryScreenText;
 	[SerializeField] SplineFollower trainSplineFollower;
+	[SerializeField] TrainEngine train;
 
+	[SerializeField] GameObject defeatScreen;
+	[SerializeField] TextMeshProUGUI defeatScreenText;
+
+
+	//Most of this is very lazy due to time constraints. TODO clean this up.
 	public void FixedUpdate() {
+		if(!train) train = FindObjectOfType<TrainEngine>();
+
+		if(train.health <= 0) {
+			defeatScreen.SetActive(true);
+			defeatScreenText.text = "You may not have made it to gravy town, but you made it a whole "+(trainSplineFollower.distanceAlongSpline/1000f).ToString("0.0")+" kilometers!";
+			trainSplineFollower.gameObject.GetComponent<TrainEngine>().movementSpeed = 0;
+			trainSplineFollower.gameObject.GetComponent<TrainEngine>().currentThrottleLevel = 2;
+			return;
+		}
+
 		totalTimePassed += Time.fixedDeltaTime;
 		if(trainSplineFollower.distanceAlongSpline >= distanceToWin) {
 			if(!wonTheGame) {

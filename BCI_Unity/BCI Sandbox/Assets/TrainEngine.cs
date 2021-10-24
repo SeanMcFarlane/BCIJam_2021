@@ -8,6 +8,9 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] [ReadOnly] Animator throttleAnimator;
 	[SerializeField] [ReadOnly] Animator trainSpriteAnimator;
 
+	//Gameplay params
+	[SerializeField] [ReadOnly] public int health = 100;
+
 	//Visual tunings
 	[SerializeField] private float fullWheelSpeedThreshold = 10f;
 

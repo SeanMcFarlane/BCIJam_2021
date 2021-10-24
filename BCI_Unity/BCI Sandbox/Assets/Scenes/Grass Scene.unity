@@ -1034,9 +1034,9 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
     - position: {x: -74.79833, y: -1354.7854, z: 0}
-      leftTangent: {x: 358.13586, y: 223.43921, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
-      mode: 2
+      mode: 0
       height: 1
       bevelCutoff: 0
       bevelSize: 0
@@ -1044,9 +1044,9 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
     - position: {x: -98.80704, y: -59.584652, z: 0}
-      leftTangent: {x: -0.49075317, y: -16.141872, z: 0}
-      rightTangent: {x: 0.4264984, y: 14.028389, z: 0}
-      mode: 1
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
       height: 1
       bevelCutoff: 0
       bevelSize: 0
@@ -1144,8 +1144,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 12706a4483c34e744bc3b1ff06a767dc, type: 3}
   - {fileID: 21300000, guid: 4a99345edd5eacd40989642fcd8fc248, type: 3}
   m_LocalAABB:
-    m_Center: {x: 899.95386, y: -776.2871, z: -0.0002504}
-    m_Extent: {x: 999.40015, y: 869.55945, z: 0.0002504}
+    m_Center: {x: 899.95355, y: -776.29834, z: -0.0003004}
+    m_Extent: {x: 999.4005, y: 869.5707, z: 0.0003004}
 --- !u!114 &1288863938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1780,30 +1780,10 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 5518.588, y: 923.62164, z: 0}
-      leftTangent: {x: -59.89502, y: 41.912537, z: 0}
-      rightTangent: {x: 28.752455, y: -20.120008, z: -0}
-      mode: 1
-      height: 1
-      bevelCutoff: 0
-      bevelSize: 0
-      spriteIndex: 0
-      corner: 1
-      m_CornerMode: 1
-    - position: {x: 5869.045, y: 804.4629, z: 0}
-      leftTangent: {x: -77.41455, y: 75.352234, z: 0}
-      rightTangent: {x: 486.0955, y: -473.14597, z: -0}
-      mode: 1
-      height: 1
-      bevelCutoff: 0
-      bevelSize: 0
-      spriteIndex: 0
-      corner: 1
-      m_CornerMode: 1
-    - position: {x: 4474.3945, y: -1995.6107, z: 0}
-      leftTangent: {x: 1.0742188, y: 3.9354248, z: 0}
-      rightTangent: {x: -3.1796875, y: -11.655151, z: 0}
-      mode: 1
+    - position: {x: 4587.537, y: -1067.8406, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
       height: 1
       bevelCutoff: 0
       bevelSize: 0
@@ -1901,8 +1881,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 12706a4483c34e744bc3b1ff06a767dc, type: 3}
   - {fileID: 21300000, guid: 4a99345edd5eacd40989642fcd8fc248, type: 3}
   m_LocalAABB:
-    m_Center: {x: 2974.005, y: -478.43127, z: -0.00015015}
-    m_Extent: {x: 2974.005, y: 1517.7754, z: 0.00015015}
+    m_Center: {x: 2666.3074, y: -285.17957, z: -0.00020015}
+    m_Extent: {x: 2666.3074, y: 1324.5239, z: 0.00020015}
 --- !u!114 &1681478227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2328,6 +2308,9 @@ MonoBehaviour:
   victoryScreen: {fileID: 748208598}
   victoryScreenText: {fileID: 178860674}
   trainSplineFollower: {fileID: 1713422932}
+  train: {fileID: 0}
+  defeatScreen: {fileID: 8214250211797868267}
+  defeatScreenText: {fileID: 8214250211797868266}
 --- !u!1001 &1931249736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2542,6 +2525,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 339250643, guid: 3b8dc7e559e977b45ae4a55c487c0e13, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8214250211999088000, guid: 3b8dc7e559e977b45ae4a55c487c0e13, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2632,3 +2619,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b8dc7e559e977b45ae4a55c487c0e13, type: 3}
+--- !u!114 &8214250211797868266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1331948684, guid: 3b8dc7e559e977b45ae4a55c487c0e13, type: 3}
+  m_PrefabInstance: {fileID: 8214250211797868265}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8214250211797868267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 339250643, guid: 3b8dc7e559e977b45ae4a55c487c0e13, type: 3}
+  m_PrefabInstance: {fileID: 8214250211797868265}
+  m_PrefabAsset: {fileID: 0}

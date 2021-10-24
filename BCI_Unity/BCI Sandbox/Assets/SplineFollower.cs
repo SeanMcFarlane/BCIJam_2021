@@ -8,6 +8,8 @@ public class SplineFollower : MonoBehaviour {
 	static int ARC_LENGTH_RESOLUTION = 1000;
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
+	[SerializeField] [ReadOnly] private Vector3 prevPos;
+
 	[SerializeField] private GameObject target;
 	[SerializeField] [ReadOnly] private SpriteShapeController ssc;
 	[SerializeField] [ReadOnly] private Spline spl;
@@ -120,7 +122,7 @@ public class SplineFollower : MonoBehaviour {
 			prevPoint = BezierUtility.BezierPoint(startPos, startTangent, endTangent, endPos, splineArcLengthTables[i].distanceToScalar(localDistanceAlongSpline-TANGENT_TEST_DELTA_POS));
 		}
 		else {
-			prevPoint = curPoint-Vector3.right*TANGENT_TEST_DELTA_POS;
+			prevPoint = prevPos;
 		}
 
 		Vector3 tangent = curPoint - prevPoint;
@@ -128,6 +130,8 @@ public class SplineFollower : MonoBehaviour {
 
 		transform.rotation = Quaternion.Euler(0, 0, angle);
 		transform.localPosition += transform.up*verticalOffset;
+
+		prevPos = transform.position;
 
 	}
 }

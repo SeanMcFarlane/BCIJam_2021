@@ -16,12 +16,14 @@ public class Interactable : MonoBehaviour {
 	*/
 
 	[SerializeField] [ReadOnlyAttribute] public bool visible = false;
+	[SerializeField] [ReadOnlyAttribute] public bool tracked = false;
 
 	[SerializeField] [ReadOnlyAttribute] public bool initialized = false;
 
 	[SerializeField] [ReadOnlyAttribute] public GameObject localPlayer;
 	[SerializeField] private bool useMouseEvents = false;
 	[SerializeField] private bool useTriggerEvents = false;
+	[SerializeField] private bool useBCIEvents = true;
 	[SerializeField] public GameObjEvent mouseEnterEvent;
 	[SerializeField] public GameObjEvent mouseExitEvent;
 	[SerializeField] public GameObjEvent interactEvent; //This is universal between mouse and BCI
@@ -126,9 +128,9 @@ public class Interactable : MonoBehaviour {
 		}
 
 		onStartEvent.Invoke();
-		P300Events.current.OnTargetSelection += OnP300Targeted;
-		//P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
-		//controller.AddExistingBCIButton(this);
+		if(useBCIEvents) {
+			P300Events.current.OnTargetSelection += OnP300Targeted;
+		}
 	}
 
 	public void FindPlayer() {
@@ -137,44 +139,59 @@ public class Interactable : MonoBehaviour {
 
 	private void OnBecameInvisible() {
 		visible = false;
-		P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
-		controller.RemoveBCIButton(this);
+		if(!initialized) return;
+		if(!useBCIEvents) return;
+		GameObject gameManager = GameObject.Find("GameManager");
+		if(gameManager) {
+			P300_Controller controller = gameManager.GetComponent<P300_Controller>();
+			if(controller) {
+				controller.RemoveBCIButton(this);
+			}
+		}
 	}
 
 	private void OnBecameVisible() {
 		visible = true;
-		P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
-		controller.AddExistingBCIButton(this);
-	}
-
-	// Update is called once per frame
-	void Update() {
-		if(blackFlashTimer > 0) {
-			mySprite.color = Color.black;
-			blackFlashTimer -= Time.deltaTime;
-		}
-		else if(whiteFlashTimer > 0) {
-			mySprite.color = Color.white;
-			whiteFlashTimer -= Time.deltaTime;
-		}
-		else {
-			mySprite.color = myBaseColor;
-		}
-
-		if(isHighlighted) {
-			mySprite.color += Color.white*0.2f;
-		}
-
-		if(mySprite != null) {
-			if(successSpriteTimer > 0) {
-				mySprite.sprite = successSprite;
-				successSpriteTimer -= Time.deltaTime;
+		if(!initialized) return;
+		if(!useBCIEvents) return;
+		GameObject gameManager = GameObject.Find("GameManager");
+		if(gameManager) {
+			P300_Controller controller = gameManager.GetComponent<P300_Controller>();
+			if(controller) {
+				controller.AddExistingBCIButton(this);
 			}
-			else {
-				mySprite.sprite = baseSprite;
-			}
+
 		}
 
+		// Update is called once per frame
+		void Update() {
+			if(mySprite != null) {
+				if(blackFlashTimer > 0) {
+					mySprite.color = Color.black;
+					blackFlashTimer -= Time.deltaTime;
+				}
+				else if(whiteFlashTimer > 0) {
+					mySprite.color = Color.white;
+					whiteFlashTimer -= Time.deltaTime;
+				}
+				else {
+					mySprite.color = myBaseColor;
+				}
+
+				if(isHighlighted) {
+					mySprite.color += Color.white*0.2f;
+				}
+
+				if(successSpriteTimer > 0) {
+					mySprite.sprite = successSprite;
+					successSpriteTimer -= Time.deltaTime;
+				}
+				else {
+					mySprite.sprite = baseSprite;
+				}
+			}
+
+		}
 	}
 }
 

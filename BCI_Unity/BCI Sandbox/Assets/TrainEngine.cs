@@ -31,6 +31,10 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] private float steepnessSpeedLoss = 10; // Scales up to this value at 90 degrees (vertical)
 	[SerializeField] private float steepnessSpeedGain = 10; // Scales up to this value at -90 degrees (vertical)
 
+	public void TakeDamage(int dmg) {
+		this.GetComponent<AudioSource>().Play();
+		health -= dmg;
+	}
 
 	public void Jump() {
 		if(mySplineFollower.extraVertOffset >0) { return; }

@@ -162,36 +162,36 @@ public class Interactable : MonoBehaviour {
 			}
 
 		}
+	}
 
-		// Update is called once per frame
-		void Update() {
-			if(mySprite != null) {
-				if(blackFlashTimer > 0) {
-					mySprite.color = Color.black;
-					blackFlashTimer -= Time.deltaTime;
-				}
-				else if(whiteFlashTimer > 0) {
-					mySprite.color = Color.white;
-					whiteFlashTimer -= Time.deltaTime;
-				}
-				else {
-					mySprite.color = myBaseColor;
-				}
-
-				if(isHighlighted) {
-					mySprite.color += Color.white*0.2f;
-				}
-
-				if(successSpriteTimer > 0) {
-					mySprite.sprite = successSprite;
-					successSpriteTimer -= Time.deltaTime;
-				}
-				else {
-					mySprite.sprite = baseSprite;
-				}
+	// Update is called once per frame
+	void Update() {
+		if(mySprite != null) {
+			if(blackFlashTimer > 0) {
+				mySprite.color = Color.black;
+				blackFlashTimer -= Time.deltaTime;
+			}
+			else if(whiteFlashTimer > 0) {
+				mySprite.color = Color.white;
+				whiteFlashTimer -= Time.deltaTime;
+			}
+			else {
+				mySprite.color = myBaseColor;
 			}
 
+			if(isHighlighted) {
+				mySprite.color += Color.white*0.2f;
+			}
+
+			if(successSpriteTimer > 0) {
+				mySprite.sprite = successSprite;
+				successSpriteTimer -= Time.deltaTime;
+			}
+			else {
+				mySprite.sprite = baseSprite;
+			}
 		}
+
 	}
 }
 

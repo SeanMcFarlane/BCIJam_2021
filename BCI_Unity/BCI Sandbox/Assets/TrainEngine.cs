@@ -103,7 +103,7 @@ public class TrainEngine : MonoBehaviour {
 		movementSpeed += throttleLevels[currentThrottleLevel]*Time.fixedDeltaTime;
 		mySplineFollower.distanceAlongSpline += movementSpeed*Time.fixedDeltaTime;
 
-		if(movementSpeed >= maxSpeedLevels[currentThrottleLevel]) {
+		if(movementSpeed >= maxSpeedLevels[currentThrottleLevel] && currentThrottleLevel >= 2) {
 			movementSpeed -= 2f*Time.fixedDeltaTime*throttleLevels[currentThrottleLevel];
 			Debug.Log("Overspeed! Decelerating.");
 		}

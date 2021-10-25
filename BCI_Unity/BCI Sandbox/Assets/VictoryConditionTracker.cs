@@ -32,9 +32,10 @@ public class VictoryConditionTracker : MonoBehaviour {
 
 		totalTimePassed += Time.fixedDeltaTime;
 		if(trainSplineFollower.distanceAlongSpline >= distanceToWin) {
+			TrainEngine engine = trainSplineFollower.gameObject.GetComponent<TrainEngine>();
 			if(!wonTheGame) {
 				victoryScreen.SetActive(true);
-				victoryScreenText.text = "You beat the game in "+totalTimePassed.ToString("0")+" seconds!";
+				victoryScreenText.text = "You beat the game in "+totalTimePassed.ToString("0")+" seconds! By selling "+engine.gravy+" tons of gravy, you made "+50000*engine.gravy+" dollars!!";
 				wonTheGame = true;
 			}
 			trainSplineFollower.distanceAlongSpline = distanceToWin;

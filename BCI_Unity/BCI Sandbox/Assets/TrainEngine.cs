@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TrainEngine : MonoBehaviour {
@@ -7,9 +8,13 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] [ReadOnly] SplineFollower mySplineFollower;
 	[SerializeField] [ReadOnly] Animator throttleAnimator;
 	[SerializeField] [ReadOnly] Animator trainSpriteAnimator;
+	[SerializeField] private TextMeshProUGUI statsText; //Set manually via drag & drop
 
 	//Gameplay params
+	[SerializeField] [ReadOnly] public TrainCar attachedCarBehind;
 	[SerializeField] [ReadOnly] public int health = 100;
+	[SerializeField] [ReadOnly] public int coal = 0;
+	[SerializeField] [ReadOnly] public int gravy = 0;
 
 	//Visual tunings
 	[SerializeField] private float fullWheelSpeedThreshold = 10f;
@@ -19,8 +24,9 @@ public class TrainEngine : MonoBehaviour {
 
 	//Movespeed and acceleration
 	[SerializeField] [ReadOnly] public float movementSpeed = 0;
-	[SerializeField] private float maxSpeed = 50;
+	[SerializeField] private float maxSpeedCap = 25;
 	[SerializeField] private float[] throttleLevels = { -2f, -1f, 0f, 0.25f, 0.5f };
+	[SerializeField] private float[] maxSpeedLevels = { 7.5f, 7.5f, 7.5f, 7.5f, 15f };
 	[SerializeField] public int currentThrottleLevel = 2; // acceleration of 0 by default
 
 	public void Jump() {
@@ -42,6 +48,7 @@ public class TrainEngine : MonoBehaviour {
 
 	private void Init() {
 		if(initialized) return;
+		health = 100;
 		Transform throttleTransform = transform.Find("TrainSprite/ThrottleIndicator");
 		throttleAnimator = throttleTransform.GetComponent<Animator>();
 
@@ -63,12 +70,16 @@ public class TrainEngine : MonoBehaviour {
 		throttleAnimator.Play("TrainThrottle", 0, animationFrameTime);
 
 		trainSpriteAnimator.SetFloat("Speed", movementSpeed/fullWheelSpeedThreshold);
+
+		statsText.text = "Train Health: "+health+"%"+
+			"\nGravy: "+gravy+" tons"+
+			"\nCoal: "+coal+" bags";
 	}
 
 	// Update is called once per frame
 	void FixedUpdate() {
 		movementSpeed += throttleLevels[currentThrottleLevel]*Time.fixedDeltaTime;
 		mySplineFollower.distanceAlongSpline += movementSpeed*Time.fixedDeltaTime;
-		movementSpeed = Mathf.Clamp(movementSpeed, 0, maxSpeed);
+		movementSpeed = Mathf.Clamp(movementSpeed, 0, maxSpeedCap);
 	}
 }

@@ -15,6 +15,8 @@ public class Interactable : MonoBehaviour {
 	The trigger unityevents will only work if the collider is set to trigger mode.
 	*/
 
+	[SerializeField] [ReadOnlyAttribute] public bool visible = false;
+
 	[SerializeField] [ReadOnlyAttribute] public bool initialized = false;
 
 	[SerializeField] [ReadOnlyAttribute] public GameObject localPlayer;
@@ -34,17 +36,15 @@ public class Interactable : MonoBehaviour {
 	[SerializeField] public UnityEvent onStartEvent;
 	[SerializeField] public GameObject interactor; //This is the entity that is highlighting this entity for an interaction. Null if no active interactor present.
 
-
 	[Tooltip("Set to true if you want the sprite to display a highlighted outline when it is hovered over.")]
 	[SerializeField] private bool useHighlightColor = false;
-	[SerializeField] private bool isHighlighted = false;
+	[SerializeField] [ReadOnly] private bool isHighlighted = false;
 
 	[SerializeField] [ReadOnly] private Sprite baseSprite;
 	[SerializeField] private Sprite successSprite;
 
 	[SerializeField] private float successSpriteDuration = 1f;
 	[SerializeField] [ReadOnly] private float successSpriteTimer;
-
 
 	#region BCI
 
@@ -75,7 +75,7 @@ public class Interactable : MonoBehaviour {
 		mouseEnterEvent.Invoke(localPlayer);
 		Debug.Log("MOUSE ENTERED!");
 		if(useHighlightColor && mySprite != null) {
-			mySprite.color = myHighlightColor;
+			isHighlighted = true;
 		}
 	}
 
@@ -85,7 +85,7 @@ public class Interactable : MonoBehaviour {
 		mouseExitEvent.Invoke(localPlayer);
 		Debug.Log("MOUSE EXIT!");
 		if(useHighlightColor && mySprite != null) {
-			mySprite.color = myBaseColor;
+			isHighlighted = false;
 		}
 	}
 
@@ -127,12 +127,24 @@ public class Interactable : MonoBehaviour {
 
 		onStartEvent.Invoke();
 		P300Events.current.OnTargetSelection += OnP300Targeted;
-		P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
-		controller.AddExistingBCIButton(this);
+		//P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
+		//controller.AddExistingBCIButton(this);
 	}
 
 	public void FindPlayer() {
 		//Setting localPlayer here will allow interaction events to send the interacting player GameObject as an argument.
+	}
+
+	private void OnBecameInvisible() {
+		visible = false;
+		P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
+		controller.RemoveBCIButton(this);
+	}
+
+	private void OnBecameVisible() {
+		visible = true;
+		P300_Controller controller = GameObject.Find("GameManager").GetComponent<P300_Controller>();
+		controller.AddExistingBCIButton(this);
 	}
 
 	// Update is called once per frame
@@ -145,8 +157,12 @@ public class Interactable : MonoBehaviour {
 			mySprite.color = Color.white;
 			whiteFlashTimer -= Time.deltaTime;
 		}
-		else { //TODO: stop this from overriding hover highlight for mouse users
+		else {
 			mySprite.color = myBaseColor;
+		}
+
+		if(isHighlighted) {
+			mySprite.color += Color.white*0.2f;
 		}
 
 		if(mySprite != null) {

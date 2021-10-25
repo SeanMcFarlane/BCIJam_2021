@@ -73,8 +73,8 @@ public class SplineFollower : MonoBehaviour {
 			else localDistanceAlongSpline-=targetSC.segmentLengths[n];//Move to next segment, remove current segment length from total distance
 		}
 
-		Debug.Log("TotalDistance["+distanceAlongSpline+"]");
-		Debug.Log("Spline Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
+		//Debug.Log("TotalDistance["+distanceAlongSpline+"]");
+		//Debug.Log("Spline Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
 
 
 		if(currentSplineSection == -1) {

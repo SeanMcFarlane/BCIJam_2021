@@ -11,9 +11,17 @@ License: CC0
 
 #### Sounds: 
 
-Train Horns: 
+train-horn-single and train-horn-double: 
 - https://freesound.org/people/jjboeke/sounds/470982/
 - License: CC0
+
+chug-chug-low-qual:
+- https://freesound.org/people/gadzooks/sounds/39413/
+- License: CC0
+
+steam-train-departs: 
+- https://freesound.org/people/acclivity/sounds/25719/
+- - License: CC0
 
 #### CC0 License:
 https://creativecommons.org/publicdomain/zero/1.0/

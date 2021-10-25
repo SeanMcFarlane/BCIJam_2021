@@ -326,22 +326,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1015257054, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
-      propertyPath: m_Size.x
-      value: 2.1059108
-      objectReference: {fileID: 0}
-    - target: {fileID: 1015257054, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
-      propertyPath: m_Size.y
-      value: 0.5937533
-      objectReference: {fileID: 0}
-    - target: {fileID: 1015257054, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.17103007
-      objectReference: {fileID: 0}
-    - target: {fileID: 1015257054, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.48749468
-      objectReference: {fileID: 0}
     - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
       propertyPath: statsText
       value: 
@@ -981,7 +965,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8213780511001812065, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
   m_PrefabInstance: {fileID: 306860825}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &574351032
+--- !u!82 &574351033
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -991,11 +975,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0f2bf0a7ea9324643bff30613b84b608, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -330,6 +330,34 @@ PrefabInstance:
       propertyPath: statsText
       value: 
       objectReference: {fileID: 2021511714}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: maxSpeedLevels.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: maxSpeedLevels.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: maxSpeedLevels.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: maxSpeedLevels.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: maxSpeedLevels.Array.data[4]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: throttleLevels.Array.data[3]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667771507037062663, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
+      propertyPath: throttleLevels.Array.data[4]
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8213780511001812065, guid: cd6443403a73a7d4fa8c1224d8bac9f2, type: 3}
       propertyPath: m_RootOrder
       value: 8

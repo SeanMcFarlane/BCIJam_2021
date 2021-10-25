@@ -235,7 +235,6 @@ public class P300_Controller : MonoBehaviour {
 
 	public void RemoveBCIButton(Interactable bciButton) {
 		bciButtonList.RemoveAt(bciButton.p300Id);
-		GameObject.Destroy(bciButton.gameObject);
 		UpkeepBCIButtonList();
 	}
 

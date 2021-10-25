@@ -38,6 +38,7 @@ public class TrainEngine : MonoBehaviour {
 
 	public void Jump() {
 		if(mySplineFollower.extraVertOffset >0) { return; }
+		trainSpriteAnimator.SetTrigger("TrainJump");
 		mySplineFollower.jumpVelocity = jumpPower;
 	}
 

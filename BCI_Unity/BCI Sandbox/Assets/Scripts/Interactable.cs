@@ -139,7 +139,7 @@ public class Interactable : MonoBehaviour {
 
 	private void OnBecameInvisible() {
 		visible = false;
-		if(!initialized) return;
+		//if(!initialized) return;
 		if(!useBCIEvents) return;
 		GameObject gameManager = GameObject.Find("GameManager");
 		if(gameManager) {
@@ -152,7 +152,7 @@ public class Interactable : MonoBehaviour {
 
 	private void OnBecameVisible() {
 		visible = true;
-		if(!initialized) return;
+		//if(!initialized) return;
 		if(!useBCIEvents) return;
 		GameObject gameManager = GameObject.Find("GameManager");
 		if(gameManager) {

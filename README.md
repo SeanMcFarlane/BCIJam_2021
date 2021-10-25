@@ -21,7 +21,11 @@ chug-chug-low-qual:
 
 steam-train-departs: 
 - https://freesound.org/people/acclivity/sounds/25719/
-- - License: CC0
+- License: CC0
+
+steam-burst:
+- https://freesound.org/people/pengo_au/sounds/90143/
+- License: CC0
 
 #### CC0 License:
 https://creativecommons.org/publicdomain/zero/1.0/

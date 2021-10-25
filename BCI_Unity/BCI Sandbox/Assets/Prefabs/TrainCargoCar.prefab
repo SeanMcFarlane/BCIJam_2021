@@ -242,7 +242,7 @@ MonoBehaviour:
   jumpGravity: 9.86
   jumpVelocity: 0
   extraVertOffset: 0
-  distanceAlongSpline: 75
+  distanceAlongSpline: 18
   localDistanceAlongSpline: 0
 --- !u!114 &3534794790253134002
 MonoBehaviour:
@@ -421,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7988224877841775289, guid: 9fddda8126cb3cc4e871d96015f7d9b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.553
+      value: 1.221
       objectReference: {fileID: 0}
     - target: {fileID: 7988224877841775289, guid: 9fddda8126cb3cc4e871d96015f7d9b4, type: 3}
       propertyPath: m_LocalPosition.z

@@ -10,14 +10,23 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] [ReadOnly] Animator trainSpriteAnimator;
 	[SerializeField] private TextMeshProUGUI statsText; //Set manually via drag & drop
 
+
+
 	//Gameplay params
 	[SerializeField] [ReadOnly] public TrainCar attachedCarBehind;
 	[SerializeField] [ReadOnly] public int health = 100;
 	[SerializeField] [ReadOnly] public int coal = 0;
 	[SerializeField] [ReadOnly] public int gravy = 0;
 
-	//Visual tunings
+	//Audio/Visual tunings
 	[SerializeField] private float fullWheelSpeedThreshold = 10f;
+	[SerializeField] private AudioClip smashClip; //Set manually via drag & drop
+	[SerializeField] private AudioClip whistleClip; //Set manually via drag & drop
+	[SerializeField] private AudioClip jumpClip; //Set manually via drag & drop
+
+	[SerializeField] [ReadOnly] bool hasNeverMovedBefore = true;
+
+
 
 	//Jump parameters
 	[SerializeField] private float jumpPower = 6;
@@ -32,17 +41,22 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] private float steepnessSpeedGain = 10; // Scales up to this value at -90 degrees (vertical)
 
 	public void TakeDamage(int dmg) {
-		this.GetComponent<AudioSource>().Play();
+		this.GetComponent<AudioSource>().PlayOneShot(smashClip);
 		health -= dmg;
 	}
 
 	public void Jump() {
 		if(mySplineFollower.extraVertOffset >0) { return; }
 		trainSpriteAnimator.SetTrigger("TrainJump");
+		this.GetComponent<AudioSource>().PlayOneShot(jumpClip);
 		mySplineFollower.jumpVelocity = jumpPower;
 	}
 
 	public void ThrottleUp() {
+		if(hasNeverMovedBefore) {
+			hasNeverMovedBefore = false;
+			this.GetComponent<AudioSource>().PlayOneShot(whistleClip);
+		}
 		if(currentThrottleLevel < throttleLevels.Length-1) {
 			currentThrottleLevel++;
 		}

@@ -73,7 +73,7 @@ public class Interactable : MonoBehaviour {
 		if(!useMouseEvents || !isActiveAndEnabled) return;
 		FindPlayer();
 		mouseEnterEvent.Invoke(localPlayer);
-		Debug.Log("MOUSE ENTERED!");
+		//Debug.Log("MOUSE ENTERED!");
 		if(useHighlightColor && mySprite != null) {
 			isHighlighted = true;
 		}
@@ -83,7 +83,7 @@ public class Interactable : MonoBehaviour {
 		if(!useMouseEvents || !isActiveAndEnabled) return;
 		FindPlayer();
 		mouseExitEvent.Invoke(localPlayer);
-		Debug.Log("MOUSE EXIT!");
+		//Debug.Log("MOUSE EXIT!");
 		if(useHighlightColor && mySprite != null) {
 			isHighlighted = false;
 		}
@@ -93,7 +93,7 @@ public class Interactable : MonoBehaviour {
 		if(!useMouseEvents || !isActiveAndEnabled) return;
 		FindPlayer();
 		interactEvent.Invoke(localPlayer);
-		Debug.Log("MOUSE DOWN!");
+		//Debug.Log("MOUSE DOWN!");
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {

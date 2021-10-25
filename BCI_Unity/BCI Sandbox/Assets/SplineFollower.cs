@@ -8,7 +8,7 @@ public class SplineFollower : MonoBehaviour {
 
 	static float TANGENT_TEST_DELTA_POS = 0.1f;
 
-	[SerializeField] [ReadOnly] private float angle;
+	[SerializeField] [ReadOnly] public float angle;
 
 	[SerializeField] private GameObject target;
 	[SerializeField] [ReadOnly] private SplineConnector targetSC;

@@ -28,6 +28,9 @@ public class TrainEngine : MonoBehaviour {
 	[SerializeField] private float[] throttleLevels = { -2f, -1f, 0f, 0.25f, 0.5f };
 	[SerializeField] private float[] maxSpeedLevels = { 7.5f, 7.5f, 7.5f, 7.5f, 15f };
 	[SerializeField] public int currentThrottleLevel = 2; // acceleration of 0 by default
+	[SerializeField] private float steepnessSpeedLoss = 1; // Scales up to this value at 90 degrees (vertical)
+	[SerializeField] private float steepnessSpeedGain = 1; // Scales up to this value at -90 degrees (vertical)
+
 
 	public void Jump() {
 		if(mySplineFollower.extraVertOffset >0) { return; }
@@ -80,6 +83,18 @@ public class TrainEngine : MonoBehaviour {
 	void FixedUpdate() {
 		movementSpeed += throttleLevels[currentThrottleLevel]*Time.fixedDeltaTime;
 		mySplineFollower.distanceAlongSpline += movementSpeed*Time.fixedDeltaTime;
-		movementSpeed = Mathf.Clamp(movementSpeed, 0, maxSpeedCap);
+
+		if(movementSpeed >= maxSpeedLevels[currentThrottleLevel]) {
+			movementSpeed -= 0.5f*Time.fixedDeltaTime;
+		}
+
+		if(mySplineFollower.angle > 0) {
+			movementSpeed -= Time.fixedDeltaTime*(mySplineFollower.angle/90f)*steepnessSpeedLoss;
+			Debug.Log("Steep hill slowed train by "+(Time.fixedDeltaTime*(mySplineFollower.angle/90f)*steepnessSpeedLoss).ToString("0.0"));
+		}
+		else if(mySplineFollower.angle > 0) {
+			movementSpeed += Time.fixedDeltaTime*(Mathf.Abs(mySplineFollower.angle/90f))*steepnessSpeedGain;
+			Debug.Log("Steep hill sped up train by "+Time.fixedDeltaTime*(Mathf.Abs(mySplineFollower.angle/90f))*steepnessSpeedGain);
+		}
 	}
 }

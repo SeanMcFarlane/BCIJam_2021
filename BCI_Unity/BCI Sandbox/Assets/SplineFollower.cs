@@ -76,12 +76,10 @@ public class SplineFollower : MonoBehaviour {
 		//Debug.Log("TotalDistance["+distanceAlongSpline+"]");
 		//Debug.Log("Spline Position ["+localDistanceAlongSpline.ToString("F2")+"] on spline index #"+currentSplineSection);
 
-
 		if(currentSplineSection == -1) {
 			Debug.LogError("Could not locate position on spline. Probably exceeded total length.");
 			return;
 		}
-
 
 		int i = currentSplineSection;
 		int spriteID = spl.GetSpriteIndex(i);

@@ -7,5 +7,6 @@ public class RockPile : MonoBehaviour {
 		GameObject playerTrain = GameObject.Find("TrainEngine");
 		TrainEngine trainEngine = playerTrain.GetComponent<TrainEngine>();
 		trainEngine.TakeDamage(10);
+		Destroy(this.gameObject);
 	}
 }

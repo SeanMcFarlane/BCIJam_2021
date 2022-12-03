@@ -13,7 +13,7 @@ Click the square in front of the train to speed up, and the one behind the train
 The square above the train allows you to jump to avoid dangerous rocks.
 You can also click on bags of coal and gravy tanker cars to take them with you.
 
-### Attributation for Assets used:
+### Attribution for Assets used:
 
 #### Music:
 https://opengameart.org/content/sunny-side-up-updated-version
